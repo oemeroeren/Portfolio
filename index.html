@@ -8,572 +8,351 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --white: #ffffff;
-    --off-white: #f7f6f4;
-    --light: #eeece9;
-    --mid: #d4d0cb;
-    --text: #1a1816;
-    --muted: #7a756e;
-    --accent: #007B8A;
-    --accent-light: #e8f4f6;
-    --accent-dark: #005f6b;
-    --nav-bg: rgba(247,246,244,0.92);
-    --card-bg: #ffffff;
-    --serif: 'DM Serif Display', Georgia, serif;
-    --sans: 'DM Sans', system-ui, sans-serif;
+    --off-white:#f7f6f4;--light:#eeece9;--mid:#d4d0cb;
+    --text:#1a1816;--muted:#7a756e;--accent:#007B8A;
+    --accent-light:#e8f4f6;--accent-dark:#005f6b;
+    --nav-bg:rgba(247,246,244,0.92);--card-bg:#ffffff;
+    --serif:'DM Serif Display',Georgia,serif;--sans:'DM Sans',system-ui,sans-serif;
+  }
+  [data-theme="dark"]{
+    --off-white:#111111;--light:#1e1e1e;--mid:#333333;
+    --text:#f0ede8;--muted:#888480;--accent:#00b4c8;
+    --accent-light:#0a2a2e;--accent-dark:#00d4eb;
+    --nav-bg:rgba(17,17,17,0.92);--card-bg:#1a1a1a;
   }
 
-  [data-theme="dark"] {
-    --white: #1a1a1a;
-    --off-white: #111111;
-    --light: #1e1e1e;
-    --mid: #333333;
-    --text: #f0ede8;
-    --muted: #888480;
-    --accent: #00b4c8;
-    --accent-light: #0a2a2e;
-    --accent-dark: #00d4eb;
-    --nav-bg: rgba(17,17,17,0.92);
-    --card-bg: #1a1a1a;
-  }
+  /* OVERLAY */
+  #mode-overlay{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:#0d0d0d;transition:opacity 0.6s ease;}
+  #mode-overlay.hidden{opacity:0;pointer-events:none;}
+  .mode-selector{text-align:center;animation:fadeUp 0.7s ease both;max-width:560px;padding:2rem;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+  .mode-greeting{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);color:#f0ede8;letter-spacing:-0.02em;margin-bottom:0.4rem;}
+  .mode-greeting em{color:#00b4c8;font-style:italic;}
+  .mode-step-label{font-size:0.75rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:1rem;margin-top:2rem;}
+  .mode-options{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+  .mode-btn{display:flex;flex-direction:column;align-items:center;gap:0.75rem;padding:1.5rem 2rem;border-radius:1rem;cursor:pointer;border:1.5px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);transition:all 0.2s;min-width:130px;font-family:'DM Sans',sans-serif;}
+  .mode-btn:hover{border-color:#00b4c8;background:rgba(0,180,200,0.08);transform:translateY(-3px);}
+  .mode-btn.selected{border-color:#00b4c8;background:rgba(0,180,200,0.12);}
+  .mode-btn .mode-icon{font-size:2rem;}
+  .mode-btn .mode-label{font-size:0.85rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(255,255,255,0.7);}
+  .mode-btn .mode-desc{font-size:0.72rem;color:rgba(255,255,255,0.3);}
+  .mode-divider{width:100%;height:1px;background:rgba(255,255,255,0.07);margin:2rem 0;}
+  .mode-start-btn{margin-top:2rem;padding:0.9rem 2.5rem;background:#00b4c8;color:white;border:none;border-radius:0.5rem;font-family:'DM Sans',sans-serif;font-size:0.95rem;font-weight:600;cursor:pointer;transition:all 0.2s;opacity:0;pointer-events:none;letter-spacing:0.02em;}
+  .mode-start-btn.ready{opacity:1;pointer-events:auto;}
+  .mode-start-btn:hover{background:#009aac;transform:translateY(-1px);}
 
-  /* MODE SELECTOR OVERLAY */
-  #mode-overlay {
-    position: fixed; inset: 0; z-index: 9999;
-    display: flex; align-items: center; justify-content: center;
-    background: #0d0d0d;
-    transition: opacity 0.6s ease;
-  }
-  #mode-overlay.hidden {
-    opacity: 0; pointer-events: none;
-  }
-  .mode-selector {
-    text-align: center;
-    animation: fadeUp 0.7s ease both;
-  }
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .mode-greeting {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-size: clamp(1.8rem, 4vw, 3rem);
-    color: #f0ede8;
-    letter-spacing: -0.02em;
-    margin-bottom: 0.5rem;
-  }
-  .mode-greeting em { color: #00b4c8; font-style: italic; }
-  .mode-sub {
-    font-family: 'DM Sans', system-ui, sans-serif;
-    font-size: 0.9rem; color: rgba(255,255,255,0.35);
-    letter-spacing: 0.06em; text-transform: uppercase;
-    margin-bottom: 3.5rem;
-  }
-  .mode-options {
-    display: flex; gap: 1.25rem; justify-content: center; flex-wrap: wrap;
-  }
-  .mode-btn {
-    display: flex; flex-direction: column; align-items: center; gap: 1rem;
-    padding: 2rem 2.5rem;
-    border-radius: 1rem; cursor: pointer;
-    border: 1.5px solid rgba(255,255,255,0.1);
-    background: rgba(255,255,255,0.04);
-    transition: all 0.2s; min-width: 160px;
-    font-family: 'DM Sans', system-ui, sans-serif;
-  }
-  .mode-btn:hover {
-    border-color: #00b4c8;
-    background: rgba(0,180,200,0.08);
-    transform: translateY(-3px);
-  }
-  .mode-btn .mode-icon { font-size: 2.5rem; line-height: 1; }
-  .mode-btn .mode-label {
-    font-size: 0.85rem; font-weight: 600;
-    letter-spacing: 0.08em; text-transform: uppercase;
-    color: rgba(255,255,255,0.7);
-  }
-  .mode-btn .mode-desc { font-size: 0.75rem; color: rgba(255,255,255,0.3); font-weight: 300; }
+  /* FLOATING */
+  .floating-btns{position:fixed;bottom:1.5rem;right:1.5rem;z-index:200;display:none;flex-direction:column;gap:0.5rem;align-items:flex-end;}
+  .toggle-btn{background:var(--card-bg);border:1.5px solid var(--mid);border-radius:2rem;padding:0.45rem 1rem;font-family:var(--sans);font-size:0.78rem;font-weight:500;color:var(--muted);cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:0.4rem;box-shadow:0 4px 16px rgba(0,0,0,0.1);}
+  .toggle-btn:hover{border-color:var(--accent);color:var(--accent);}
 
-  /* TOGGLE BUTTON (bottom right after selection) */
-  .mode-toggle-btn {
-    position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 200;
-    background: var(--card-bg); border: 1.5px solid var(--mid);
-    border-radius: 2rem; padding: 0.5rem 1.1rem;
-    font-family: var(--sans); font-size: 0.8rem; font-weight: 500;
-    color: var(--muted); cursor: pointer;
-    transition: all 0.2s; display: flex; align-items: center; gap: 0.5rem;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-  }
-  .mode-toggle-btn:hover { border-color: var(--accent); color: var(--accent); }
+  html{scroll-behavior:smooth;}
+  body{font-family:var(--sans);background:var(--off-white);color:var(--text);line-height:1.6;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
 
-  html { scroll-behavior: smooth; }
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.25rem 4rem;background:var(--nav-bg);backdrop-filter:blur(12px);border-bottom:1px solid var(--mid);transition:background 0.3s,border-color 0.3s;}
+  .nav-logo{font-family:var(--serif);font-size:1.25rem;color:var(--text);text-decoration:none;letter-spacing:-0.02em;}
+  .nav-links{display:flex;gap:2.5rem;list-style:none;}
+  .nav-links a{font-size:0.875rem;font-weight:500;color:var(--muted);text-decoration:none;letter-spacing:0.04em;text-transform:uppercase;transition:color 0.2s;}
+  .nav-links a:hover{color:var(--accent);}
 
-  body {
-    font-family: var(--sans);
-    background: var(--off-white);
-    color: var(--text);
-    line-height: 1.6;
-    overflow-x: hidden;
-    transition: background 0.3s, color 0.3s;
-  }
+  .hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;padding-top:80px;}
+  .hero-left{display:flex;flex-direction:column;justify-content:center;padding:6rem 4rem;}
+  .hero-tag{display:inline-block;font-size:0.75rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);background:var(--accent-light);padding:0.4rem 0.9rem;border-radius:2rem;margin-bottom:2rem;width:fit-content;}
+  .hero-name{font-family:var(--serif);font-size:clamp(3rem,6vw,5.5rem);line-height:1.05;letter-spacing:-0.03em;color:var(--text);margin-bottom:1.5rem;}
+  .hero-name em{font-style:italic;color:var(--accent);}
+  .hero-sub{font-size:1.1rem;font-weight:300;color:var(--muted);max-width:420px;margin-bottom:3rem;line-height:1.7;}
+  .hero-btns{display:flex;gap:1rem;flex-wrap:wrap;}
+  .btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.85rem 1.75rem;font-family:var(--sans);font-size:0.9rem;font-weight:500;text-decoration:none;border-radius:0.375rem;transition:all 0.2s;cursor:pointer;border:none;}
+  .btn-primary{background:var(--accent);color:white;}
+  .btn-primary:hover{background:var(--accent-dark);transform:translateY(-1px);}
+  .btn-outline{background:transparent;color:var(--text);border:1.5px solid var(--mid);}
+  .btn-outline:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px);}
+  .hero-right{background:var(--light);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;transition:background 0.3s;}
+  .hero-right::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 30%,var(--accent-light) 0%,transparent 60%);}
+  .hero-visual{position:relative;z-index:1;text-align:center;padding:3rem;}
+  .hero-avatar{width:220px;height:220px;border-radius:50%;background:var(--mid);margin:0 auto 2rem;display:flex;align-items:center;justify-content:center;border:4px solid var(--card-bg);box-shadow:0 20px 60px rgba(0,123,138,0.15);overflow:hidden;}
+  .hero-avatar-placeholder{font-family:var(--serif);font-size:5rem;color:var(--muted);line-height:1;}
+  .hero-skills{display:flex;gap:0.6rem;flex-wrap:wrap;justify-content:center;}
+  .skill-chip{font-size:0.75rem;font-weight:500;padding:0.35rem 0.8rem;background:var(--card-bg);color:var(--muted);border-radius:2rem;border:1px solid var(--mid);transition:background 0.3s;}
 
-  /* NAV */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 1.25rem 4rem;
-    background: var(--nav-bg);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--mid);
-    transition: background 0.3s, border-color 0.3s;
-  }
-  .nav-logo {
-    font-family: var(--serif);
-    font-size: 1.25rem;
-    color: var(--text);
-    text-decoration: none;
-    letter-spacing: -0.02em;
-  }
-  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-  .nav-links a {
-    font-size: 0.875rem; font-weight: 500; color: var(--muted);
-    text-decoration: none; letter-spacing: 0.04em; text-transform: uppercase;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--accent); }
+  section{padding:6rem 4rem;}
+  .section-label{font-size:0.72rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:0.75rem;}
+  .section-title{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);letter-spacing:-0.02em;line-height:1.1;margin-bottom:1rem;}
+  .section-sub{color:var(--muted);font-size:1rem;font-weight:300;max-width:520px;margin-bottom:3.5rem;line-height:1.7;}
 
-  /* HERO */
-  .hero {
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding-top: 80px;
-  }
-  .hero-left {
-    display: flex; flex-direction: column; justify-content: center;
-    padding: 6rem 4rem 6rem 4rem;
-  }
-  .hero-tag {
-    display: inline-block;
-    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em;
-    text-transform: uppercase; color: var(--accent);
-    background: var(--accent-light);
-    padding: 0.4rem 0.9rem; border-radius: 2rem;
-    margin-bottom: 2rem; width: fit-content;
-  }
-  .hero-name {
-    font-family: var(--serif);
-    font-size: clamp(3rem, 6vw, 5.5rem);
-    line-height: 1.05; letter-spacing: -0.03em;
-    color: var(--text); margin-bottom: 1.5rem;
-  }
-  .hero-name em { font-style: italic; color: var(--accent); }
-  .hero-sub {
-    font-size: 1.1rem; font-weight: 300; color: var(--muted);
-    max-width: 420px; margin-bottom: 3rem; line-height: 1.7;
-  }
-  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
-  .btn {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    padding: 0.85rem 1.75rem;
-    font-family: var(--sans); font-size: 0.9rem; font-weight: 500;
-    text-decoration: none; border-radius: 0.375rem;
-    transition: all 0.2s; cursor: pointer; border: none;
-  }
-  .btn-primary { background: var(--accent); color: white; }
-  .btn-primary:hover { background: var(--accent-dark); transform: translateY(-1px); }
-  .btn-outline { background: transparent; color: var(--text); border: 1.5px solid var(--mid); }
-  .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
-
-  .hero-right {
-    background: var(--light);
-    display: flex; align-items: center; justify-content: center;
-    position: relative; overflow: hidden;
-    transition: background 0.3s;
-  }
-  .hero-right::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: radial-gradient(ellipse at 70% 30%, var(--accent-light) 0%, transparent 60%);
-  }
-  .hero-visual {
-    position: relative; z-index: 1;
-    text-align: center; padding: 3rem;
-  }
-  .hero-avatar {
-    width: 220px; height: 220px; border-radius: 50%;
-    background: var(--mid);
-    margin: 0 auto 2rem;
-    display: flex; align-items: center; justify-content: center;
-    border: 4px solid var(--white);
-    box-shadow: 0 20px 60px rgba(0,123,138,0.15);
-    overflow: hidden;
-  }
-  .hero-avatar img { width: 100%; height: 100%; object-fit: cover; }
-  .hero-avatar-placeholder {
-    font-family: var(--serif); font-size: 5rem;
-    color: var(--muted); line-height: 1;
-  }
-  .hero-skills { display: flex; gap: 0.6rem; flex-wrap: wrap; justify-content: center; }
-  .skill-chip {
-    font-size: 0.75rem; font-weight: 500;
-    padding: 0.35rem 0.8rem;
-    background: var(--white); color: var(--muted);
-    border-radius: 2rem; border: 1px solid var(--mid);
-    transition: background 0.3s, color 0.3s;
-  }
-
-  /* SECTIONS */
-  section { padding: 6rem 4rem; }
-  .section-label {
-    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em;
-    text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem;
-  }
-  .section-title {
-    font-family: var(--serif);
-    font-size: clamp(2rem, 4vw, 3rem);
-    letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 1rem;
-  }
-  .section-sub {
-    color: var(--muted); font-size: 1rem; font-weight: 300;
-    max-width: 520px; margin-bottom: 3.5rem; line-height: 1.7;
-  }
-
-  /* ABOUT */
-  .about { background: var(--white); transition: background 0.3s; }
-  .about-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
-    align-items: start; max-width: 1100px; margin: 0 auto;
-  }
-  .about-text p {
-    color: var(--muted); font-weight: 300; line-height: 1.8;
-    margin-bottom: 1.2rem; font-size: 1rem;
-  }
-  .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-  .stat-card {
-    background: var(--off-white); border-radius: 0.75rem;
-    padding: 1.5rem; border: 1px solid var(--light);
-    transition: background 0.3s, border-color 0.3s;
-  }
-  .stat-number {
-    font-family: var(--serif); font-size: 2.5rem;
-    color: var(--accent); line-height: 1; margin-bottom: 0.4rem;
-  }
-  .stat-label { font-size: 0.8rem; color: var(--muted); font-weight: 500; }
+  .about{background:var(--card-bg);transition:background 0.3s;}
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;max-width:1100px;margin:0 auto;}
+  .about-text p{color:var(--muted);font-weight:300;line-height:1.8;margin-bottom:1.2rem;font-size:1rem;}
+  .about-stats{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+  .stat-card{background:var(--off-white);border-radius:0.75rem;padding:1.5rem;border:1px solid var(--light);transition:background 0.3s,border-color 0.3s;}
+  .stat-number{font-family:var(--serif);font-size:2.5rem;color:var(--accent);line-height:1;margin-bottom:0.4rem;}
+  .stat-label{font-size:0.8rem;color:var(--muted);font-weight:500;}
 
   /* PROJECTS */
-  .projects { background: var(--off-white); transition: background 0.3s; }
-  .projects-grid {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 1.75rem; max-width: 1200px; margin: 0 auto;
-  }
-  .project-card {
-    background: var(--card-bg); border-radius: 1rem;
-    border: 1px solid var(--light); overflow: hidden;
-    transition: transform 0.25s, box-shadow 0.25s, background 0.3s, border-color 0.3s;
-  }
-  .project-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 50px rgba(0,0,0,0.12);
-  }
-  .project-media {
-    aspect-ratio: 16/9; background: var(--light);
-    position: relative; overflow: hidden;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .project-media iframe { width: 100%; height: 100%; border: none; pointer-events: none; }
-  .project-media-placeholder {
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    gap: 0.75rem; width: 100%; height: 100%; color: var(--muted);
-  }
-  .project-media-placeholder .icon { font-size: 2.5rem; opacity: 0.4; }
-  .project-media-placeholder span {
-    font-size: 0.78rem; font-weight: 500;
-    letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.5;
-  }
-  .project-body { padding: 1.5rem; }
-  .project-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.9rem; }
-  .project-tag {
-    font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em;
-    text-transform: uppercase; color: var(--accent);
-    background: var(--accent-light); padding: 0.25rem 0.6rem; border-radius: 0.25rem;
-  }
-  .project-title {
-    font-family: var(--serif); font-size: 1.35rem;
-    letter-spacing: -0.01em; margin-bottom: 0.6rem; color: var(--text);
-  }
-  .project-desc {
-    font-size: 0.875rem; color: var(--muted);
-    line-height: 1.65; margin-bottom: 1.25rem; font-weight: 300;
-  }
-  .project-tech { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-  .tech-pill {
-    font-size: 0.72rem; padding: 0.25rem 0.65rem;
-    background: var(--off-white); color: var(--muted);
-    border-radius: 2rem; border: 1px solid var(--mid); font-weight: 500;
-    transition: background 0.3s, border-color 0.3s;
-  }
+  .projects{background:var(--off-white);transition:background 0.3s;}
+  .projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1.75rem;max-width:1200px;margin:0 auto;}
+  .project-card{background:var(--card-bg);border-radius:1rem;border:1px solid var(--light);overflow:hidden;transition:transform 0.25s,box-shadow 0.25s,background 0.3s,border-color 0.3s;cursor:pointer;}
+  .project-card:hover{transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,0.12);}
+  .project-media{aspect-ratio:16/9;background:var(--light);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+  .project-media img{width:100%;height:100%;object-fit:cover;}
+  .project-media-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.75rem;width:100%;height:100%;color:var(--muted);}
+  .project-media-placeholder .icon{font-size:2.5rem;opacity:0.4;}
+  .project-media-placeholder span{font-size:0.78rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;opacity:0.5;}
+  .project-body{padding:1.5rem;}
+  .project-tags{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.9rem;}
+  .project-tag{font-size:0.7rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);background:var(--accent-light);padding:0.25rem 0.6rem;border-radius:0.25rem;}
+  .project-title{font-family:var(--serif);font-size:1.35rem;letter-spacing:-0.01em;margin-bottom:0.6rem;color:var(--text);}
+  .project-desc{font-size:0.875rem;color:var(--muted);line-height:1.65;margin-bottom:1.25rem;font-weight:300;}
+  .project-tech{display:flex;gap:0.5rem;flex-wrap:wrap;}
+  .tech-pill{font-size:0.72rem;padding:0.25rem 0.65rem;background:var(--off-white);color:var(--muted);border-radius:2rem;border:1px solid var(--mid);font-weight:500;transition:background 0.3s,border-color 0.3s;}
+  .project-read-more{display:inline-flex;align-items:center;gap:0.4rem;margin-top:1rem;font-size:0.82rem;font-weight:600;color:var(--accent);letter-spacing:0.04em;text-transform:uppercase;}
+  .project-read-more::after{content:'→';transition:transform 0.2s;}
+  .project-card:hover .project-read-more::after{transform:translateX(4px);}
 
-  /* SKILLS */
-  .skills-section { background: var(--white); transition: background 0.3s; }
-  .skills-grid {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 1.25rem; max-width: 1100px; margin: 0 auto;
-  }
-  .skill-card {
-    background: var(--off-white); border-radius: 0.75rem;
-    padding: 1.5rem; border: 1px solid var(--light);
-    transition: background 0.3s, border-color 0.3s;
-  }
-  .skill-card-label {
-    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em;
-    text-transform: uppercase; color: var(--accent); margin-bottom: 0.9rem;
-  }
-  .skill-list { list-style: none; }
-  .skill-list li {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0.45rem 0; border-bottom: 1px solid var(--light);
-    font-size: 0.875rem; color: var(--text); font-weight: 400;
-    transition: border-color 0.3s;
-  }
-  .skill-list li:last-child { border-bottom: none; }
-  .skill-level { font-size: 0.72rem; color: var(--muted); font-weight: 500; }
+  /* MODAL */
+  .modal-overlay{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,0.7);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:2rem;opacity:0;pointer-events:none;transition:opacity 0.3s;}
+  .modal-overlay.open{opacity:1;pointer-events:auto;}
+  .modal{background:var(--card-bg);border-radius:1.25rem;width:100%;max-width:860px;max-height:90vh;overflow-y:auto;position:relative;transform:translateY(20px);transition:transform 0.3s;}
+  .modal-overlay.open .modal{transform:none;}
+  .modal-close{position:sticky;top:1rem;float:right;margin:1rem 1rem 0 0;width:36px;height:36px;border-radius:50%;background:var(--light);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:var(--muted);z-index:10;transition:background 0.2s;}
+  .modal-close:hover{background:var(--mid);}
+  .modal-cover{width:100%;aspect-ratio:16/5;object-fit:cover;object-position:center top;border-radius:1.25rem 1.25rem 0 0;}
+  .modal-cover-placeholder{width:100%;aspect-ratio:16/5;background:linear-gradient(135deg,#1a0a0a,#3d0000);display:flex;align-items:center;justify-content:center;border-radius:1.25rem 1.25rem 0 0;}
+  .modal-body{padding:2.5rem;}
+  .modal-tags{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1rem;}
+  .modal-title{font-family:var(--serif);font-size:2.2rem;letter-spacing:-0.02em;margin-bottom:0.5rem;color:var(--text);}
+  .modal-subtitle{color:var(--accent);font-size:0.85rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:2rem;}
+  .modal-section-title{font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:0.75rem;margin-top:2rem;}
+  .modal-text{color:var(--muted);font-weight:300;line-height:1.8;font-size:0.95rem;margin-bottom:1rem;}
+  .modal-video{width:100%;aspect-ratio:16/9;border-radius:0.75rem;overflow:hidden;margin:1.5rem 0;background:var(--light);}
+  .modal-video iframe{width:100%;height:100%;border:none;}
+  .modal-images{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin:1.5rem 0;}
+  .modal-img{width:100%;border-radius:0.5rem;object-fit:cover;border:1px solid var(--light);}
+  .modal-features{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;margin:1rem 0;}
+  .modal-feature{background:var(--off-white);border-radius:0.5rem;padding:0.6rem 0.9rem;font-size:0.82rem;color:var(--text);border:1px solid var(--light);display:flex;align-items:center;gap:0.5rem;}
+  .modal-tech{display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.75rem;}
 
-  /* CONTACT */
-  .contact {
-    background: var(--text); color: var(--off-white);
-    text-align: center; transition: background 0.3s;
-  }
-  .contact .section-label { color: var(--accent); }
-  .contact .section-title { color: var(--off-white); margin: 0 auto 1rem; }
-  .contact .section-sub { color: rgba(255,255,255,0.4); margin: 0 auto 2.5rem; }
-  .contact-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-  .contact .btn-outline { color: var(--off-white); border-color: rgba(255,255,255,0.2); }
-  .contact .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+  .skills-section{background:var(--card-bg);transition:background 0.3s;}
+  .skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.25rem;max-width:1100px;margin:0 auto;}
+  .skill-card{background:var(--off-white);border-radius:0.75rem;padding:1.5rem;border:1px solid var(--light);transition:background 0.3s,border-color 0.3s;}
+  .skill-card-label{font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:0.9rem;}
+  .skill-list{list-style:none;}
+  .skill-list li{display:flex;align-items:center;justify-content:space-between;padding:0.45rem 0;border-bottom:1px solid var(--light);font-size:0.875rem;color:var(--text);transition:border-color 0.3s;}
+  .skill-list li:last-child{border-bottom:none;}
+  .skill-level{font-size:0.72rem;color:var(--muted);font-weight:500;}
 
-  footer {
-    background: var(--text); border-top: 1px solid rgba(255,255,255,0.07);
-    padding: 1.5rem 4rem; text-align: center;
-    font-size: 0.8rem; color: rgba(255,255,255,0.25);
-    transition: background 0.3s;
-  }
+  .contact{background:var(--text);color:var(--off-white);text-align:center;transition:background 0.3s;}
+  .contact .section-label{color:var(--accent);}
+  .contact .section-title{color:var(--off-white);margin:0 auto 1rem;}
+  .contact .section-sub{color:rgba(255,255,255,0.4);margin:0 auto 2.5rem;}
+  .contact-links{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+  .contact .btn-outline{color:var(--off-white);border-color:rgba(255,255,255,0.2);}
+  .contact .btn-outline:hover{border-color:var(--accent);color:var(--accent);}
+  footer{background:var(--text);border-top:1px solid rgba(255,255,255,0.07);padding:1.5rem 4rem;text-align:center;font-size:0.8rem;color:rgba(255,255,255,0.25);transition:background 0.3s;}
 
-  /* ANIMATIONS */
-  .fade-in {
-    opacity: 0; transform: translateY(24px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
-  .fade-in.visible { opacity: 1; transform: none; }
+  .fade-in{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease;}
+  .fade-in.visible{opacity:1;transform:none;}
 
-  @media (max-width: 768px) {
-    nav { padding: 1rem 1.5rem; }
-    .nav-links { display: none; }
-    .hero { grid-template-columns: 1fr; }
-    .hero-right { display: none; }
-    .hero-left { padding: 6rem 1.5rem 3rem; }
-    section { padding: 4rem 1.5rem; }
-    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-    .projects-grid { grid-template-columns: 1fr; }
-    footer { padding: 1.5rem; }
-    .mode-options { flex-direction: column; align-items: center; }
+  @media(max-width:768px){
+    nav{padding:1rem 1.5rem;}
+    .nav-links{display:none;}
+    .hero{grid-template-columns:1fr;}
+    .hero-right{display:none;}
+    .hero-left{padding:6rem 1.5rem 3rem;}
+    section{padding:4rem 1.5rem;}
+    .about-grid{grid-template-columns:1fr;gap:2.5rem;}
+    .projects-grid{grid-template-columns:1fr;}
+    footer{padding:1.5rem;}
+    .modal-features{grid-template-columns:1fr;}
+    .modal-body{padding:1.5rem;}
+    .mode-options{flex-direction:column;align-items:center;}
   }
 </style>
 </head>
 <body>
 
-<!-- MODE SELECTOR OVERLAY -->
+<!-- OVERLAY -->
 <div id="mode-overlay">
   <div class="mode-selector">
     <h1 class="mode-greeting">Willkommen bei<br><em>Ömer Ören</em></h1>
-    <p class="mode-sub">Wähle dein bevorzugtes Design</p>
+    <p class="mode-step-label">🌐 Sprache / Language</p>
     <div class="mode-options">
-      <div class="mode-btn" onclick="selectMode('light')">
-        <span class="mode-icon">☀️</span>
-        <span class="mode-label">Light Mode</span>
-        <span class="mode-desc">Hell & clean</span>
-      </div>
-      <div class="mode-btn" onclick="selectMode('dark')">
-        <span class="mode-icon">🌙</span>
-        <span class="mode-label">Dark Mode</span>
-        <span class="mode-desc">Dunkel & atmosphärisch</span>
-      </div>
+      <div class="mode-btn" id="btn-de" onclick="selectLang('de')"><span class="mode-icon">🇩🇪</span><span class="mode-label">Deutsch</span><span class="mode-desc">Deutsche Version</span></div>
+      <div class="mode-btn" id="btn-en" onclick="selectLang('en')"><span class="mode-icon">🇬🇧</span><span class="mode-label">English</span><span class="mode-desc">English version</span></div>
     </div>
+    <div class="mode-divider"></div>
+    <p class="mode-step-label">🎨 Design</p>
+    <div class="mode-options">
+      <div class="mode-btn" id="btn-light" onclick="selectTheme('light')"><span class="mode-icon">☀️</span><span class="mode-label">Light</span><span class="mode-desc">Hell & clean</span></div>
+      <div class="mode-btn" id="btn-dark" onclick="selectTheme('dark')"><span class="mode-icon">🌙</span><span class="mode-label">Dark</span><span class="mode-desc">Dunkel & atmosphärisch</span></div>
+    </div>
+    <button class="mode-start-btn" id="start-btn" onclick="enterSite()">Portfolio ansehen →</button>
   </div>
 </div>
 
-<!-- TOGGLE BUTTON (appears after mode selection) -->
-<button class="mode-toggle-btn" id="toggle-btn" onclick="toggleMode()" style="display:none;">
-  <span id="toggle-icon">🌙</span>
-  <span id="toggle-label">Dark Mode</span>
-</button>
+<!-- FLOATING BUTTONS -->
+<div class="floating-btns" id="floating-btns">
+  <button class="toggle-btn" onclick="toggleTheme()"><span id="theme-icon">🌙</span><span id="theme-label">Dark Mode</span></button>
+  <button class="toggle-btn" onclick="toggleLang()"><span id="lang-icon">🇬🇧</span><span id="lang-label">English</span></button>
+</div>
 
-<!-- NAV -->
+<!-- PROJECT MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modal-content"></div>
+  </div>
+</div>
+
 <nav>
   <a href="#" class="nav-logo">Ömer Ören</a>
   <ul class="nav-links">
-    <li><a href="#about">Über mich</a></li>
-    <li><a href="#projects">Projekte</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#contact">Kontakt</a></li>
+    <li><a href="#about" data-i18n="nav-about">Über mich</a></li>
+    <li><a href="#projects" data-i18n="nav-projects">Projekte</a></li>
+    <li><a href="#skills" data-i18n="nav-skills">Skills</a></li>
+    <li><a href="#contact" data-i18n="nav-contact">Kontakt</a></li>
   </ul>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-left">
-    <span class="hero-tag">Game Designer & Developer · Berlin</span>
+    <span class="hero-tag" data-i18n="hero-tag">Game Designer & Developer · Berlin</span>
     <h1 class="hero-name">Ömer<br><em>Ören</em></h1>
-    <p class="hero-sub">
-      Game Design Bachelor (IU) mit Leidenschaft für Spielmechaniken, 3D-Assets und mobile Entwicklung. Von der Idee bis zum fertigen Prototyp.
-    </p>
+    <p class="hero-sub" data-i18n="hero-sub">Game Design Bachelor (IU) mit Leidenschaft für Spielmechaniken, 3D-Assets und mobile Entwicklung. Von der Idee bis zum fertigen Prototyp.</p>
     <div class="hero-btns">
-      <a href="#projects" class="btn btn-primary">Projekte ansehen</a>
-      <a href="mailto:oemer.oeren@outlook.com" class="btn btn-outline">Kontakt aufnehmen</a>
+      <a href="#projects" class="btn btn-primary" data-i18n="hero-btn1">Projekte ansehen</a>
+      <a href="mailto:oemer.oeren@outlook.com" class="btn btn-outline" data-i18n="hero-btn2">Kontakt aufnehmen</a>
     </div>
   </div>
   <div class="hero-right">
     <div class="hero-visual">
       <div class="hero-avatar">
-        <!-- DEIN FOTO: Ersetze mit: <img src="foto.jpg" alt="Ömer Ören"> -->
+        <!-- FOTO: <img src="foto.jpg" alt="Ömer Ören"> -->
         <span class="hero-avatar-placeholder">Ö</span>
       </div>
       <div class="hero-skills">
-        <span class="skill-chip">Unity</span>
-        <span class="skill-chip">Blender</span>
-        <span class="skill-chip">C#</span>
-        <span class="skill-chip">Photoshop</span>
-        <span class="skill-chip">Android</span>
-        <span class="skill-chip">Game Design</span>
+        <span class="skill-chip">Unity</span><span class="skill-chip">Blender</span>
+        <span class="skill-chip">C#</span><span class="skill-chip">Photoshop</span>
+        <span class="skill-chip">Android</span><span class="skill-chip">Game Design</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ABOUT -->
 <section class="about" id="about">
   <div class="about-grid">
     <div class="about-text fade-in">
-      <p class="section-label">Über mich</p>
-      <h2 class="section-title">Spieler. Gestalter. Entwickler.</h2>
-      <p>Game Design Bachelor (B.A.) — abgeschlossen 2026 an der IU Internationale Hochschule. Seitdem sitze ich weiter an eigenen Projekten: Unity-Prototypen, 3D-Assets in Blender und vollständige Android-Apps.</p>
-      <p>Mein Fokus liegt auf dem kompletten Prozess: vom ersten Konzept über 3D-Modellierung und Implementierung in Unity bis zur fertigen APK. Spiele bauen ist für mich kein Hobby — es ist der Plan.</p>
-      <p>Parallel arbeite ich in Teilzeit im E-Commerce, wo ich über mehrere Jahre Verantwortung in Teamkoordination, Content-Erstellung und Lieferantenkommunikation übernommen habe.</p>
+      <p class="section-label" data-i18n="about-label">Über mich</p>
+      <h2 class="section-title" data-i18n="about-title">Spieler. Gestalter. Entwickler.</h2>
+      <p data-i18n="about-p1">Game Design Bachelor (B.A.) — abgeschlossen 2026 an der IU Internationale Hochschule. Seitdem sitze ich weiter an eigenen Projekten: Unity-Prototypen, 3D-Assets in Blender und vollständige Android-Apps.</p>
+      <p data-i18n="about-p2">Mein Fokus liegt auf dem kompletten Prozess: vom ersten Konzept über 3D-Modellierung und Implementierung in Unity bis zur fertigen APK. Spiele bauen ist für mich kein Hobby — es ist der Plan.</p>
+      <p data-i18n="about-p3">Parallel arbeite ich in Teilzeit im E-Commerce, wo ich über mehrere Jahre Verantwortung in Teamkoordination, Content-Erstellung und Lieferantenkommunikation übernommen habe.</p>
     </div>
     <div class="about-stats fade-in">
-      <div class="stat-card">
-        <div class="stat-number">4+</div>
-        <div class="stat-label">Jahre Unity-Erfahrung</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">6+</div>
-        <div class="stat-label">Eigene Projekte</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">3</div>
-        <div class="stat-label">Sprachen fließend</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">B.A.</div>
-        <div class="stat-label">Game Design, IU 2026</div>
-      </div>
+      <div class="stat-card"><div class="stat-number">4+</div><div class="stat-label" data-i18n="stat1">Jahre Unity-Erfahrung</div></div>
+      <div class="stat-card"><div class="stat-number">6+</div><div class="stat-label" data-i18n="stat2">Eigene Projekte</div></div>
+      <div class="stat-card"><div class="stat-number">3</div><div class="stat-label" data-i18n="stat3">Sprachen fließend</div></div>
+      <div class="stat-card"><div class="stat-number">B.A.</div><div class="stat-label" data-i18n="stat4">Game Design, IU 2026</div></div>
     </div>
   </div>
 </section>
 
-<!-- PROJECTS -->
 <section class="projects" id="projects">
   <div style="max-width:1200px;margin:0 auto;">
-    <p class="section-label">Portfolio</p>
-    <h2 class="section-title">Projekte</h2>
-    <p class="section-sub">Eigene Entwicklungen und Uni-Prototypen — von der ersten Idee bis zum spielbaren Build.</p>
+    <p class="section-label" data-i18n="projects-label">Portfolio</p>
+    <h2 class="section-title" data-i18n="projects-title">Projekte</h2>
+    <p class="section-sub" data-i18n="projects-sub">Eigene Entwicklungen und Uni-Prototypen — von der ersten Idee bis zum spielbaren Build.</p>
     <div class="projects-grid">
 
-      <div class="project-card fade-in">
+      <div class="project-card fade-in" onclick="openModal('sitd')">
         <div class="project-media">
-          <!-- VIDEO: <iframe src="https://www.youtube.com/embed/VIDEO_ID?autoplay=1&mute=1&loop=1&playlist=VIDEO_ID" allowfullscreen></iframe> -->
-          <div class="project-media-placeholder"><span class="icon">🎮</span><span>Gameplay-Video folgt</span></div>
+          <img src="CoverArt.png" alt="Safe in the Dark Cover">
         </div>
         <div class="project-body">
-          <div class="project-tags"><span class="project-tag">Unity</span><span class="project-tag">Uni-Projekt</span></div>
-          <h3 class="project-title">First Person Stealth</h3>
-          <p class="project-desc">Stealth-Spiel aus der Egoperspektive mit Mikrofon-Input — Geräusche des Spielers beeinflussen das Gameplay direkt.</p>
-          <div class="project-tech"><span class="tech-pill">Unity</span><span class="tech-pill">C#</span><span class="tech-pill">Mikrofon-API</span></div>
+          <div class="project-tags"><span class="project-tag">Unity</span><span class="project-tag" data-i18n="tag-uni">Uni-Projekt</span></div>
+          <h3 class="project-title">Safe in the Dark</h3>
+          <p class="project-desc" data-i18n="proj1-desc">3rd-Person-Stealth-Prototyp mit Vampir-Setting — schleichen, jagen und unentdeckt bleiben in einer dystopischen Welt.</p>
+          <div class="project-tech"><span class="tech-pill">Unity</span><span class="tech-pill">C#</span><span class="tech-pill">3rd Person</span><span class="tech-pill">Stealth</span></div>
+          <span class="project-read-more" data-i18n="read-more">Mehr erfahren</span>
         </div>
       </div>
 
-      <div class="project-card fade-in">
+      <div class="project-card fade-in" onclick="openModal('metroid')">
         <div class="project-media">
-          <div class="project-media-placeholder"><span class="icon">⚔️</span><span>Gameplay-Video folgt</span></div>
+          <div class="project-media-placeholder"><span class="icon">⚔️</span><span data-i18n="img-soon">Screenshots folgen</span></div>
         </div>
         <div class="project-body">
-          <div class="project-tags"><span class="project-tag">Unity</span><span class="project-tag">Uni-Projekt</span></div>
+          <div class="project-tags"><span class="project-tag">Unity</span><span class="project-tag" data-i18n="tag-uni">Uni-Projekt</span></div>
           <h3 class="project-title">Metroidvania Fantasy</h3>
-          <p class="project-desc">2D-Fantasy-Prototyp mit vernetztem Level-Design und komplexem Ability-Gating — klassische Metroidvania-Mechaniken in einer eigenen Fantasywelt.</p>
+          <p class="project-desc" data-i18n="proj2-desc">2D-Fantasy-Prototyp mit vernetztem Level-Design und komplexem Ability-Gating.</p>
           <div class="project-tech"><span class="tech-pill">Unity</span><span class="tech-pill">C#</span><span class="tech-pill">2D Level Design</span></div>
+          <span class="project-read-more" data-i18n="read-more">Mehr erfahren</span>
         </div>
       </div>
 
-      <div class="project-card fade-in">
+      <div class="project-card fade-in" onclick="openModal('flappy')">
         <div class="project-media">
-          <div class="project-media-placeholder"><span class="icon">🐦</span><span>Gameplay-Video folgt</span></div>
+          <div class="project-media-placeholder"><span class="icon">🐦</span><span data-i18n="img-soon">Screenshots folgen</span></div>
         </div>
         <div class="project-body">
           <div class="project-tags"><span class="project-tag">Unity</span><span class="project-tag">Mobile</span></div>
-          <h3 class="project-title">Flappy Bird Klon</h3>
-          <p class="project-desc">Physikbasierter Mobile-Prototyp — eigenständige Neuinterpretation des Klassikers als Unity-Lernprojekt.</p>
+          <h3 class="project-title" data-i18n="proj3-title">Flappy Bird Klon</h3>
+          <p class="project-desc" data-i18n="proj3-desc">Physikbasierter Mobile-Prototyp — eigenständige Neuinterpretation des Klassikers als Unity-Lernprojekt.</p>
           <div class="project-tech"><span class="tech-pill">Unity</span><span class="tech-pill">C#</span><span class="tech-pill">Android</span></div>
+          <span class="project-read-more" data-i18n="read-more">Mehr erfahren</span>
         </div>
       </div>
 
-      <div class="project-card fade-in">
+      <div class="project-card fade-in" onclick="openModal('dragons')">
         <div class="project-media">
-          <!-- SCREENSHOT: <img src="dragons.jpg" style="width:100%;height:100%;object-fit:cover;"> -->
-          <div class="project-media-placeholder"><span class="icon">🐉</span><span>Screenshots folgen</span></div>
+          <div class="project-media-placeholder"><span class="icon">🐉</span><span data-i18n="img-soon">Screenshots folgen</span></div>
         </div>
         <div class="project-body">
           <div class="project-tags"><span class="project-tag">Blender</span><span class="project-tag">3D Art</span></div>
-          <h3 class="project-title">3D Assets — Drachen & Eier</h3>
-          <p class="project-desc">Zwei vollständig modellierte Drachen sowie Dracheneier in Blender — organisches und hartes Surface-Modeling kombiniert.</p>
+          <h3 class="project-title" data-i18n="proj4-title">3D Assets — Drachen & Eier</h3>
+          <p class="project-desc" data-i18n="proj4-desc">Zwei vollständig modellierte Drachen sowie Dracheneier in Blender.</p>
           <div class="project-tech"><span class="tech-pill">Blender</span><span class="tech-pill">3D Modelling</span><span class="tech-pill">Texturing</span></div>
+          <span class="project-read-more" data-i18n="read-more">Mehr erfahren</span>
         </div>
       </div>
 
-      <div class="project-card fade-in">
+      <div class="project-card fade-in" onclick="openModal('makros')">
         <div class="project-media">
-          <div class="project-media-placeholder"><span class="icon">🥗</span><span>App-Video folgt</span></div>
+          <div class="project-media-placeholder"><span class="icon">🥗</span><span data-i18n="img-soon">Screenshots folgen</span></div>
         </div>
         <div class="project-body">
           <div class="project-tags"><span class="project-tag">Android</span><span class="project-tag">App</span></div>
-          <h3 class="project-title">Makros — Kalorienzähler</h3>
-          <p class="project-desc">Vollständige Android-App zum Tracken von Kalorien und Makronährstoffen mit Barcode-Scanner und Open Food Facts Integration.</p>
+          <h3 class="project-title" data-i18n="proj5-title">Makros — Kalorienzähler</h3>
+          <p class="project-desc" data-i18n="proj5-desc">Vollständige Android-App mit Barcode-Scanner und Open Food Facts Integration.</p>
           <div class="project-tech"><span class="tech-pill">PWA</span><span class="tech-pill">Android Studio</span><span class="tech-pill">Barcode API</span></div>
+          <span class="project-read-more" data-i18n="read-more">Mehr erfahren</span>
         </div>
       </div>
 
-      <div class="project-card fade-in">
+      <div class="project-card fade-in" onclick="openModal('otty')">
         <div class="project-media">
-          <div class="project-media-placeholder"><span class="icon">🦦</span><span>App-Video folgt</span></div>
+          <div class="project-media-placeholder"><span class="icon">🦦</span><span data-i18n="img-soon">Screenshots folgen</span></div>
         </div>
         <div class="project-body">
           <div class="project-tags"><span class="project-tag">Android</span><span class="project-tag">App</span></div>
-          <h3 class="project-title">Otty — Habit Tracker</h3>
-          <p class="project-desc">Habit-Tracking-App mit Otter-Maskottchen, Streak-System, Badges und Dark Mode — zweisprachig auf Deutsch und Englisch.</p>
+          <h3 class="project-title" data-i18n="proj6-title">Otty — Habit Tracker</h3>
+          <p class="project-desc" data-i18n="proj6-desc">Habit-Tracking-App mit Otter-Maskottchen, Streak-System und Dark Mode.</p>
           <div class="project-tech"><span class="tech-pill">PWA</span><span class="tech-pill">Android Studio</span><span class="tech-pill">DE/EN i18n</span></div>
+          <span class="project-read-more" data-i18n="read-more">Mehr erfahren</span>
         </div>
       </div>
 
-      <div class="project-card fade-in">
+      <div class="project-card fade-in" onclick="openModal('gymtimer')">
         <div class="project-media">
-          <div class="project-media-placeholder"><span class="icon">💪</span><span>App-Video folgt</span></div>
+          <div class="project-media-placeholder"><span class="icon">💪</span><span data-i18n="img-soon">Screenshots folgen</span></div>
         </div>
         <div class="project-body">
           <div class="project-tags"><span class="project-tag">Android</span><span class="project-tag">App</span></div>
-          <h3 class="project-title">Gym Timer App</h3>
-          <p class="project-desc">Trainingszähler-App mit Web Audio API Alarmen, Set-Tracking und einem interaktiven SVG-Muskeldiagramm — synchronisiert mit eigenem PPL-Trainingsplan.</p>
+          <h3 class="project-title" data-i18n="proj7-title">Gym Timer App</h3>
+          <p class="project-desc" data-i18n="proj7-desc">Trainingszähler mit SVG-Muskeldiagramm und Web Audio API Alarmen.</p>
           <div class="project-tech"><span class="tech-pill">PWA</span><span class="tech-pill">Web Audio API</span><span class="tech-pill">SVG</span></div>
+          <span class="project-read-more" data-i18n="read-more">Mehr erfahren</span>
         </div>
       </div>
 
@@ -581,113 +360,285 @@
   </div>
 </section>
 
-<!-- SKILLS -->
 <section class="skills-section" id="skills">
   <div style="max-width:1100px;margin:0 auto;">
-    <p class="section-label">Kenntnisse</p>
-    <h2 class="section-title">Skills & Tools</h2>
-    <p class="section-sub">Tools und Technologien die ich in meinen Projekten einsetze.</p>
+    <p class="section-label" data-i18n="skills-label">Kenntnisse</p>
+    <h2 class="section-title" data-i18n="skills-title">Skills & Tools</h2>
+    <p class="section-sub" data-i18n="skills-sub">Tools und Technologien die ich in meinen Projekten einsetze.</p>
     <div class="skills-grid">
       <div class="skill-card fade-in">
-        <p class="skill-card-label">Game Development</p>
+        <p class="skill-card-label" data-i18n="sk1-label">Game Development</p>
         <ul class="skill-list">
-          <li>Unity <span class="skill-level">Gut</span></li>
-          <li>C# <span class="skill-level">Grundkenntnisse</span></li>
-          <li>Blender <span class="skill-level">Gut</span></li>
+          <li>Unity <span class="skill-level" data-i18n="lv-good">Gut</span></li>
+          <li>C# <span class="skill-level" data-i18n="lv-basic">Grundkenntnisse</span></li>
+          <li>Blender <span class="skill-level" data-i18n="lv-good">Gut</span></li>
           <li>Game Design <span class="skill-level">B.A. 2026</span></li>
         </ul>
       </div>
       <div class="skill-card fade-in">
-        <p class="skill-card-label">Design & Media</p>
+        <p class="skill-card-label" data-i18n="sk2-label">Design & Media</p>
         <ul class="skill-list">
-          <li>Adobe Photoshop <span class="skill-level">Sehr gut</span></li>
-          <li>Premiere Pro <span class="skill-level">Gut</span></li>
-          <li>Krita <span class="skill-level">Gut</span></li>
-          <li>Adobe Firefly <span class="skill-level">Gut</span></li>
+          <li>Adobe Photoshop <span class="skill-level" data-i18n="lv-vgood">Sehr gut</span></li>
+          <li>Krita <span class="skill-level" data-i18n="lv-good">Gut</span></li>
+          <li>Premiere Pro <span class="skill-level" data-i18n="lv-good">Gut</span></li>
+          <li>Adobe Firefly <span class="skill-level" data-i18n="lv-good">Gut</span></li>
         </ul>
       </div>
       <div class="skill-card fade-in">
-        <p class="skill-card-label">Entwicklung</p>
+        <p class="skill-card-label" data-i18n="sk3-label">Entwicklung</p>
         <ul class="skill-list">
-          <li>HTML / CSS <span class="skill-level">Gut</span></li>
-          <li>Python <span class="skill-level">Grundkenntnisse</span></li>
-          <li>Android Studio <span class="skill-level">Gut</span></li>
-          <li>PWA Development <span class="skill-level">Gut</span></li>
+          <li>HTML / CSS <span class="skill-level" data-i18n="lv-good">Gut</span></li>
+          <li>Python <span class="skill-level" data-i18n="lv-basic">Grundkenntnisse</span></li>
+          <li>Android Studio <span class="skill-level" data-i18n="lv-good">Gut</span></li>
+          <li>PWA Development <span class="skill-level" data-i18n="lv-good">Gut</span></li>
         </ul>
       </div>
       <div class="skill-card fade-in">
-        <p class="skill-card-label">Sprachen</p>
+        <p class="skill-card-label" data-i18n="sk4-label">Sprachen</p>
         <ul class="skill-list">
-          <li>Deutsch <span class="skill-level">Fließend</span></li>
-          <li>Englisch <span class="skill-level">Fließend</span></li>
-          <li>Türkisch <span class="skill-level">Fließend</span></li>
-          <li>Französisch <span class="skill-level">Grundkenntnisse</span></li>
+          <li><span data-i18n="lang-de">Deutsch</span> <span class="skill-level" data-i18n="lv-fluent">Fließend</span></li>
+          <li><span data-i18n="lang-en">Englisch</span> <span class="skill-level" data-i18n="lv-fluent">Fließend</span></li>
+          <li><span data-i18n="lang-tr">Türkisch</span> <span class="skill-level" data-i18n="lv-fluent">Fließend</span></li>
+          <li><span data-i18n="lang-fr">Französisch</span> <span class="skill-level" data-i18n="lv-basic">Grundkenntnisse</span></li>
         </ul>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CONTACT -->
 <section class="contact" id="contact">
-  <p class="section-label">Kontakt</p>
-  <h2 class="section-title">Lass uns reden.</h2>
-  <p class="section-sub">Offen für Praktika, Junior-Positionen und spannende Game-Projekte.</p>
+  <p class="section-label" data-i18n="contact-label">Kontakt</p>
+  <h2 class="section-title" data-i18n="contact-title">Lass uns reden.</h2>
+  <p class="section-sub" data-i18n="contact-sub">Offen für Praktika, Junior-Positionen und spannende Game-Projekte.</p>
   <div class="contact-links">
-    <a href="mailto:oemer.oeren@outlook.com" class="btn btn-primary">✉ E-Mail schreiben</a>
-    <a href="https://github.com" class="btn btn-outline" target="_blank">GitHub</a>
+    <a href="mailto:oemer.oeren@outlook.com" class="btn btn-primary" data-i18n="contact-btn">✉ E-Mail schreiben</a>
+    <a href="https://github.com/oemeroren" class="btn btn-outline" target="_blank">GitHub</a>
     <a href="#" class="btn btn-outline">LinkedIn</a>
   </div>
 </section>
 
-<footer>
-  © 2026 Ömer Ören · Berlin · Game Designer & Developer
-</footer>
+<footer>© 2026 Ömer Ören · Berlin · Game Designer & Developer</footer>
 
 <script>
-  let currentMode = 'light';
-
-  function selectMode(mode) {
-    currentMode = mode;
-    applyMode(mode);
-    const overlay = document.getElementById('mode-overlay');
-    overlay.classList.add('hidden');
-    setTimeout(() => overlay.style.display = 'none', 600);
-    const btn = document.getElementById('toggle-btn');
-    btn.style.display = 'flex';
-    updateToggleBtn();
+// ---- i18n ----
+const i18n = {
+  de:{
+    'nav-about':'Über mich','nav-projects':'Projekte','nav-skills':'Skills','nav-contact':'Kontakt',
+    'hero-tag':'Game Designer & Developer · Berlin',
+    'hero-sub':'Game Design Bachelor (IU) mit Leidenschaft für Spielmechaniken, 3D-Assets und mobile Entwicklung. Von der Idee bis zum fertigen Prototyp.',
+    'hero-btn1':'Projekte ansehen','hero-btn2':'Kontakt aufnehmen',
+    'about-label':'Über mich','about-title':'Spieler. Gestalter. Entwickler.',
+    'about-p1':'Game Design Bachelor (B.A.) — abgeschlossen 2026 an der IU Internationale Hochschule. Seitdem sitze ich weiter an eigenen Projekten: Unity-Prototypen, 3D-Assets in Blender und vollständige Android-Apps.',
+    'about-p2':'Mein Fokus liegt auf dem kompletten Prozess: vom ersten Konzept über 3D-Modellierung und Implementierung in Unity bis zur fertigen APK. Spiele bauen ist für mich kein Hobby — es ist der Plan.',
+    'about-p3':'Parallel arbeite ich in Teilzeit im E-Commerce, wo ich über mehrere Jahre Verantwortung in Teamkoordination, Content-Erstellung und Lieferantenkommunikation übernommen habe.',
+    'stat1':'Jahre Unity-Erfahrung','stat2':'Eigene Projekte','stat3':'Sprachen fließend','stat4':'Game Design, IU 2026',
+    'projects-label':'Portfolio','projects-title':'Projekte',
+    'projects-sub':'Eigene Entwicklungen und Uni-Prototypen — von der ersten Idee bis zum spielbaren Build.',
+    'tag-uni':'Uni-Projekt','img-soon':'Screenshots folgen','read-more':'Mehr erfahren',
+    'proj1-desc':'3rd-Person-Stealth-Prototyp mit Vampir-Setting — schleichen, jagen und unentdeckt bleiben in einer dystopischen Welt.',
+    'proj2-desc':'2D-Fantasy-Prototyp mit vernetztem Level-Design und komplexem Ability-Gating.',
+    'proj3-title':'Flappy Bird Klon','proj3-desc':'Physikbasierter Mobile-Prototyp — eigenständige Neuinterpretation des Klassikers als Unity-Lernprojekt.',
+    'proj4-title':'3D Assets — Drachen & Eier','proj4-desc':'Zwei vollständig modellierte Drachen sowie Dracheneier in Blender.',
+    'proj5-title':'Makros — Kalorienzähler','proj5-desc':'Vollständige Android-App mit Barcode-Scanner und Open Food Facts Integration.',
+    'proj6-title':'Otty — Habit Tracker','proj6-desc':'Habit-Tracking-App mit Otter-Maskottchen, Streak-System und Dark Mode.',
+    'proj7-title':'Gym Timer App','proj7-desc':'Trainingszähler mit SVG-Muskeldiagramm und Web Audio API Alarmen.',
+    'skills-label':'Kenntnisse','skills-title':'Skills & Tools','skills-sub':'Tools und Technologien die ich in meinen Projekten einsetze.',
+    'sk1-label':'Game Development','sk2-label':'Design & Media','sk3-label':'Entwicklung','sk4-label':'Sprachen',
+    'lv-good':'Gut','lv-vgood':'Sehr gut','lv-basic':'Grundkenntnisse','lv-fluent':'Fließend',
+    'lang-de':'Deutsch','lang-en':'Englisch','lang-tr':'Türkisch','lang-fr':'Französisch',
+    'contact-label':'Kontakt','contact-title':'Lass uns reden.','contact-sub':'Offen für Praktika, Junior-Positionen und spannende Game-Projekte.','contact-btn':'✉ E-Mail schreiben',
+  },
+  en:{
+    'nav-about':'About','nav-projects':'Projects','nav-skills':'Skills','nav-contact':'Contact',
+    'hero-tag':'Game Designer & Developer · Berlin',
+    'hero-sub':'Game Design Bachelor (IU) with a passion for game mechanics, 3D assets and mobile development. From concept to finished prototype.',
+    'hero-btn1':'View Projects','hero-btn2':'Get in touch',
+    'about-label':'About me','about-title':'Player. Creator. Developer.',
+    'about-p1':'Game Design Bachelor (B.A.) — graduated 2026 at IU International University. Since then I keep building: Unity prototypes, 3D assets in Blender and full Android apps.',
+    'about-p2':'My focus is the complete pipeline: from the first concept through 3D modelling and Unity implementation to the final APK. Building games is not a hobby for me — it\'s the plan.',
+    'about-p3':'Alongside my projects I work part-time in e-commerce, where I have taken on responsibility in team coordination, content creation and supplier communication over several years.',
+    'stat1':'Years Unity experience','stat2':'Personal projects','stat3':'Languages fluent','stat4':'Game Design, IU 2026',
+    'projects-label':'Portfolio','projects-title':'Projects',
+    'projects-sub':'Personal projects and university prototypes — from the first idea to a playable build.',
+    'tag-uni':'Uni Project','img-soon':'Screenshots coming soon','read-more':'Learn more',
+    'proj1-desc':'3rd-person stealth prototype in a vampire setting — sneak, hunt and stay undetected in a dystopian world.',
+    'proj2-desc':'2D fantasy prototype with interconnected level design and complex ability gating.',
+    'proj3-title':'Flappy Bird Clone','proj3-desc':'Physics-based mobile prototype — an independent reimagining of the classic as a Unity learning project.',
+    'proj4-title':'3D Assets — Dragons & Eggs','proj4-desc':'Two fully modelled dragons and dragon eggs in Blender.',
+    'proj5-title':'Makros — Calorie Tracker','proj5-desc':'Full Android app with barcode scanner and Open Food Facts integration.',
+    'proj6-title':'Otty — Habit Tracker','proj6-desc':'Habit tracking app with otter mascot, streak system and dark mode.',
+    'proj7-title':'Gym Timer App','proj7-desc':'Workout timer with SVG muscle diagram and Web Audio API alarms.',
+    'skills-label':'Abilities','skills-title':'Skills & Tools','skills-sub':'Tools and technologies I use across my projects.',
+    'sk1-label':'Game Development','sk2-label':'Design & Media','sk3-label':'Development','sk4-label':'Languages',
+    'lv-good':'Good','lv-vgood':'Very good','lv-basic':'Basic','lv-fluent':'Fluent',
+    'lang-de':'German','lang-en':'English','lang-tr':'Turkish','lang-fr':'French',
+    'contact-label':'Contact','contact-title':"Let's talk.",'contact-sub':'Open to internships, junior positions and exciting game projects.','contact-btn':'✉ Send an email',
   }
+};
 
-  function applyMode(mode) {
-    if (mode === 'dark') {
-      document.documentElement.setAttribute('data-theme', 'dark');
-    } else {
-      document.documentElement.removeAttribute('data-theme');
-    }
+// ---- Modal data ----
+const projects = {
+  sitd:{
+    cover:'CoverArt.png',
+    tags:{de:['Unity','C#','Stealth','Uni-Projekt'],en:['Unity','C#','Stealth','Uni Project']},
+    title:'Safe in the Dark',
+    subtitle:{de:'3rd Person Stealth · Action · Uni-Prototyp · 2023',en:'3rd Person Stealth · Action · University Prototype · 2023'},
+    overview:{
+      de:'In einer dystopischen Welt, in der Vampire als Minderheit gejagt und gefoltert werden, schlüpft der Spieler in die Haut eines Vampirs, dessen Familie von Jägern entführt wurde. Das Spiel kombiniert Stealth und Action: Im Dunkeln ist der Vampir sicher — Licht schadet ihm direkt. Der Spieler muss schleichen, Feinde überwältigen und seine Familie retten, ohne das Gesetz zu brechen, das Vampiren verbietet, Menschen zu verletzen.',
+      en:'In a dystopian world where vampires are hunted as a minority, the player takes on the role of a vampire whose family has been captured by hunters. The game blends stealth and action: darkness is safety — light deals direct damage to the player. The goal is to sneak, subdue enemies and rescue the family without breaking the law that forbids vampires from harming humans.'
+    },
+    features:{
+      de:['🎮 3rd-Person-Kamera mit Camera Shake','🌑 Licht schädigt den Spieler','👁️ Gegner-Patrouille & Sichtlinien','❤️ Health System','🏗️ Blockout Level Design','⚔️ Angriff & Überwältigen (in Arbeit)'],
+      en:['🎮 3rd person camera with camera shake','🌑 Light damages the player','👁️ Enemy patrol & line of sight','❤️ Health system','🏗️ Blockout level design','⚔️ Attack & subdue (in progress)']
+    },
+    video:'https://www.youtube.com/embed/nQ68BUPA7X4?rel=0',
+    images:['character_sketch_colored.png','character_sketch.png','MindMap.png','Core_Loop.png','Game_Idea.png'],
+    imglabels:{de:['Charakter (coloriert)','Charakter Skizze','Mind Map','Core Loop','Game Idea Screen'],en:['Character (coloured)','Character Sketch','Mind Map','Core Loop','Game Idea Screen']},
+    tech:['Unity','C#','3rd Person Controller','Blender','Krita','Photoshop']
+  },
+  metroid:{
+    cover:null,
+    tags:{de:['Unity','C#','2D','Uni-Projekt'],en:['Unity','C#','2D','Uni Project']},
+    title:'Metroidvania Fantasy',
+    subtitle:{de:'2D Action-Adventure · Uni-Prototyp',en:'2D Action-Adventure · University Prototype'},
+    overview:{de:'Ein 2D-Fantasy-Prototyp mit klassischen Metroidvania-Mechaniken: vernetzte Level, Ability-Gating und eine eigene Fantasywelt. Screenshots folgen.',en:'A 2D fantasy prototype featuring classic Metroidvania mechanics: interconnected levels, ability gating and an original fantasy world. Screenshots coming soon.'},
+    features:{de:['🗺️ Vernetztes Level-Design','⚡ Ability-Gating System','⚔️ 2D Kampf-Mechaniken','🌍 Eigene Fantasywelt'],en:['🗺️ Interconnected level design','⚡ Ability gating system','⚔️ 2D combat mechanics','🌍 Original fantasy world']},
+    video:null,images:[],tech:['Unity','C#','2D Level Design','Tilemaps']
+  },
+  flappy:{
+    cover:null,
+    tags:{de:['Unity','C#','Mobile'],en:['Unity','C#','Mobile']},
+    title:{de:'Flappy Bird Klon',en:'Flappy Bird Clone'},
+    subtitle:{de:'Mobile Prototyp · Unity Lernprojekt',en:'Mobile Prototype · Unity Learning Project'},
+    overview:{de:'Eigenständige Neuinterpretation des Klassikers als Unity-Lernprojekt. Physikbasiertes Gameplay optimiert für Android. Screenshots folgen.',en:'An independent reimagining of the classic as a Unity learning project. Physics-based gameplay optimised for Android. Screenshots coming soon.'},
+    features:{de:['📱 Android-optimiert','🎮 Physikbasiertes Gameplay','🏆 Highscore-System'],en:['📱 Android optimised','🎮 Physics-based gameplay','🏆 Highscore system']},
+    video:null,images:[],tech:['Unity','C#','Android','Physics2D']
+  },
+  dragons:{
+    cover:null,
+    tags:{de:['Blender','3D Art'],en:['Blender','3D Art']},
+    title:{de:'3D Assets — Drachen & Eier',en:'3D Assets — Dragons & Eggs'},
+    subtitle:{de:'3D Modellierung · Texturing · Blender',en:'3D Modelling · Texturing · Blender'},
+    overview:{de:'Zwei vollständig modellierte Drachen sowie Dracheneier in Blender — organisches und hartes Surface-Modeling kombiniert. Screenshots folgen.',en:'Two fully modelled dragons and dragon eggs in Blender — combining organic and hard surface modelling. Screenshots coming soon.'},
+    features:{de:['🐉 Organisches Surface-Modeling','🥚 Hard Surface Modeling','🎨 Texturing & UV-Mapping','💡 Beleuchtung & Rendering'],en:['🐉 Organic surface modelling','🥚 Hard surface modelling','🎨 Texturing & UV mapping','💡 Lighting & rendering']},
+    video:null,images:[],tech:['Blender','3D Modelling','UV Mapping','Texturing']
+  },
+  makros:{
+    cover:null,
+    tags:{de:['Android','PWA','App'],en:['Android','PWA','App']},
+    title:'Makros',
+    subtitle:{de:'Kalorienzähler & Makro-Tracker · Android App · 2026',en:'Calorie & Macro Tracker · Android App · 2026'},
+    overview:{de:'Vollständige Android-App zum Tracken von Kalorien und Makronährstoffen. Mit Barcode-Scanner, Open Food Facts API-Integration, eigenem Lebensmittel-Datenbank, Makro-Visualisierung und Datumsnavigation. Komplett offline-fähig mit Online-Suche. Screenshots folgen.',en:'Full Android app for tracking calories and macronutrients. Features barcode scanner, Open Food Facts API integration, custom food database, macro visualisation and date navigation. Fully offline-capable with online search. Screenshots coming soon.'},
+    features:{de:['📸 Barcode-Scanner','🌐 Open Food Facts API','📊 Makro-Visualisierung','📅 Datumsnavigation','💾 Lokale Datenbank','📱 Offline-fähig'],en:['📸 Barcode scanner','🌐 Open Food Facts API','📊 Macro visualisation','📅 Date navigation','💾 Local database','📱 Offline capable']},
+    video:null,images:[],tech:['HTML/CSS/JS','PWA','Android Studio','Open Food Facts API']
+  },
+  otty:{
+    cover:null,
+    tags:{de:['Android','PWA','App'],en:['Android','PWA','App']},
+    title:'Otty',
+    subtitle:{de:'Habit Tracker · Android App · 2026',en:'Habit Tracker · Android App · 2026'},
+    overview:{de:'Habit-Tracking-App mit Otter-Maskottchen und warmer Storybook-Ästhetik. Features: Streak-System, Badges, Dark Mode, zweisprachig (DE/EN) und habittyp-spezifische Motivationsinhalte. Screenshots folgen.',en:'Habit tracking app featuring an otter mascot and warm storybook aesthetic. Includes streak system, badges, dark mode, bilingual support (DE/EN) and habit-type-specific motivational content. Screenshots coming soon.'},
+    features:{de:['🦦 Otter Maskottchen','🔥 Streak-System','🏅 Badges','🌙 Dark Mode','🌍 DE/EN zweisprachig','💬 Motivationsinhalte'],en:['🦦 Otter mascot','🔥 Streak system','🏅 Badges','🌙 Dark mode','🌍 DE/EN bilingual','💬 Motivational content']},
+    video:null,images:[],tech:['HTML/CSS/JS','PWA','Android Studio','i18n']
+  },
+  gymtimer:{
+    cover:null,
+    tags:{de:['Android','PWA','App'],en:['Android','PWA','App']},
+    title:{de:'Gym Timer App',en:'Gym Timer App'},
+    subtitle:{de:'Workout-Timer · Android App · 2026',en:'Workout Timer · Android App · 2026'},
+    overview:{de:'Trainingszähler-App synchronisiert mit einem persönlichen Push/Pull/Legs-Trainingsplan. Features: Web Audio API Alarme, Set-Tracking, interaktives SVG-Muskeldiagramm das trainierte Muskeln pro Übung hervorhebt. Screenshots folgen.',en:'Workout timer app synced with a personal Push/Pull/Legs training plan. Features Web Audio API alarms, set tracking and an interactive SVG muscle diagram that highlights trained muscles per exercise. Screenshots coming soon.'},
+    features:{de:['⏱️ Workout-Timer','🔊 Web Audio API Alarme','💪 SVG Muskeldiagramm','📋 Set-Tracking','🏋️ PPL-Trainingsplan'],en:['⏱️ Workout timer','🔊 Web Audio API alarms','💪 SVG muscle diagram','📋 Set tracking','🏋️ PPL training plan']},
+    video:null,images:[],tech:['HTML/CSS/JS','PWA','Android Studio','Web Audio API','SVG']
   }
+};
 
-  function toggleMode() {
-    currentMode = currentMode === 'light' ? 'dark' : 'light';
-    applyMode(currentMode);
-    updateToggleBtn();
-  }
+function openModal(id) {
+  const p = projects[id];
+  const lang = currentLang || 'de';
+  const title = typeof p.title === 'object' ? p.title[lang] : p.title;
+  const tags = p.tags[lang].map(t => `<span class="project-tag">${t}</span>`).join('');
+  const features = p.features[lang].map(f => `<div class="modal-feature">${f}</div>`).join('');
+  const tech = p.tech.map(t => `<span class="tech-pill">${t}</span>`).join('');
 
-  function updateToggleBtn() {
-    document.getElementById('toggle-icon').textContent = currentMode === 'light' ? '🌙' : '☀️';
-    document.getElementById('toggle-label').textContent = currentMode === 'light' ? 'Dark Mode' : 'Light Mode';
-  }
+  const coverHTML = p.cover
+    ? `<img src="${p.cover}" class="modal-cover" alt="${title}">`
+    : `<div class="modal-cover-placeholder"><span style="font-size:4rem;opacity:0.3">🎮</span></div>`;
 
-  // Scroll fade-in
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('visible'), i * 80);
-        observer.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  const videoHTML = p.video
+    ? `<div class="modal-section-title">${lang==='de'?'Gameplay Video':'Gameplay Video'}</div>
+       <div class="modal-video"><iframe src="${p.video}" allowfullscreen allow="autoplay"></iframe></div>`
+    : '';
+
+  const imagesHTML = p.images && p.images.length > 0
+    ? `<div class="modal-section-title">${lang==='de'?'Bilder & Konzepte':'Images & Concepts'}</div>
+       <div class="modal-images">${p.images.map((img,i) => `<img src="${img}" class="modal-img" alt="${p.imglabels?.[lang]?.[i]||img}">`).join('')}</div>`
+    : '';
+
+  document.getElementById('modal-content').innerHTML = `
+    ${coverHTML}
+    <div class="modal-body">
+      <div class="modal-tags">${tags}</div>
+      <h2 class="modal-title">${title}</h2>
+      <p class="modal-subtitle">${p.subtitle[lang]}</p>
+      <div class="modal-section-title">${lang==='de'?'Über das Projekt':'About the Project'}</div>
+      <p class="modal-text">${p.overview[lang]}</p>
+      ${videoHTML}
+      <div class="modal-section-title">${lang==='de'?'Features':'Features'}</div>
+      <div class="modal-features">${features}</div>
+      ${imagesHTML}
+      <div class="modal-section-title">${lang==='de'?'Tech Stack':'Tech Stack'}</div>
+      <div class="modal-tech">${tech}</div>
+    </div>`;
+
+  document.getElementById('modal-overlay').classList.add('open');
+  document.getElementById('modal').scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeModalOutside(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// ---- Mode selector ----
+let currentLang = null, currentTheme = null;
+function selectLang(l) { currentLang=l; document.getElementById('btn-de').classList.toggle('selected',l==='de'); document.getElementById('btn-en').classList.toggle('selected',l==='en'); checkReady(); }
+function selectTheme(t) { currentTheme=t; document.getElementById('btn-light').classList.toggle('selected',t==='light'); document.getElementById('btn-dark').classList.toggle('selected',t==='dark'); checkReady(); }
+function checkReady() { const btn=document.getElementById('start-btn'); if(currentLang&&currentTheme){btn.classList.add('ready');btn.textContent=currentLang==='de'?'Portfolio ansehen →':'View portfolio →';} }
+function enterSite() {
+  if(!currentLang||!currentTheme) return;
+  applyTheme(currentTheme); applyLang(currentLang);
+  const o=document.getElementById('mode-overlay');
+  o.classList.add('hidden'); setTimeout(()=>o.style.display='none',600);
+  document.getElementById('floating-btns').style.display='flex';
+  updateFloatingBtns();
+}
+function applyTheme(t) { currentTheme=t; document.documentElement.setAttribute('data-theme',t==='dark'?'dark':''); updateFloatingBtns(); }
+function applyLang(l) {
+  currentLang=l; document.documentElement.lang=l;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{ const k=el.getAttribute('data-i18n'); if(i18n[l][k]) el.textContent=i18n[l][k]; });
+  updateFloatingBtns();
+}
+function toggleTheme() { applyTheme(currentTheme==='light'?'dark':'light'); }
+function toggleLang() { applyLang(currentLang==='de'?'en':'de'); }
+function updateFloatingBtns() {
+  document.getElementById('theme-icon').textContent=currentTheme==='light'?'🌙':'☀️';
+  document.getElementById('theme-label').textContent=currentTheme==='light'?'Dark Mode':'Light Mode';
+  document.getElementById('lang-icon').textContent=currentLang==='de'?'🇬🇧':'🇩🇪';
+  document.getElementById('lang-label').textContent=currentLang==='de'?'English':'Deutsch';
+}
+
+// ---- Scroll fade ----
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{ if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*80);observer.unobserve(e.target);} });
+},{threshold:0.1});
+document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
 </script>
-
 </body>
 </html>
