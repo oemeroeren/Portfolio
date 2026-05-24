@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ömer Ören — Game Designer & Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --white: #ffffff;
+    --off-white: #f7f6f4;
+    --light: #eeece9;
+    --mid: #d4d0cb;
+    --text: #1a1816;
+    --muted: #7a756e;
+    --accent: #007B8A;
+    --accent-light: #e8f4f6;
+    --accent-dark: #005f6b;
+    --nav-bg: rgba(247,246,244,0.92);
+    --card-bg: #ffffff;
+    --serif: 'DM Serif Display', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+  }
+
+  [data-theme="dark"] {
+    --white: #1a1a1a;
+    --off-white: #111111;
+    --light: #1e1e1e;
+    --mid: #333333;
+    --text: #f0ede8;
+    --muted: #888480;
+    --accent: #00b4c8;
+    --accent-light: #0a2a2e;
+    --accent-dark: #00d4eb;
+    --nav-bg: rgba(17,17,17,0.92);
+    --card-bg: #1a1a1a;
+  }
+
+  /* MODE SELECTOR OVERLAY */
+  #mode-overlay {
+    position: fixed; inset: 0; z-index: 9999;
+    display: flex; align-items: center; justify-content: center;
+    background: #0d0d0d;
+    transition: opacity 0.6s ease;
+  }
+  #mode-overlay.hidden {
+    opacity: 0; pointer-events: none;
+  }
+  .mode-selector {
+    text-align: center;
+    animation: fadeUp 0.7s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .mode-greeting {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    color: #f0ede8;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
+  .mode-greeting em { color: #00b4c8; font-style: italic; }
+  .mode-sub {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 0.9rem; color: rgba(255,255,255,0.35);
+    letter-spacing: 0.06em; text-transform: uppercase;
+    margin-bottom: 3.5rem;
+  }
+  .mode-options {
+    display: flex; gap: 1.25rem; justify-content: center; flex-wrap: wrap;
+  }
+  .mode-btn {
+    display: flex; flex-direction: column; align-items: center; gap: 1rem;
+    padding: 2rem 2.5rem;
+    border-radius: 1rem; cursor: pointer;
+    border: 1.5px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.04);
+    transition: all 0.2s; min-width: 160px;
+    font-family: 'DM Sans', system-ui, sans-serif;
+  }
+  .mode-btn:hover {
+    border-color: #00b4c8;
+    background: rgba(0,180,200,0.08);
+    transform: translateY(-3px);
+  }
+  .mode-btn .mode-icon { font-size: 2.5rem; line-height: 1; }
+  .mode-btn .mode-label {
+    font-size: 0.85rem; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+  }
+  .mode-btn .mode-desc { font-size: 0.75rem; color: rgba(255,255,255,0.3); font-weight: 300; }
+
+  /* TOGGLE BUTTON (bottom right after selection) */
+  .mode-toggle-btn {
+    position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 200;
+    background: var(--card-bg); border: 1.5px solid var(--mid);
+    border-radius: 2rem; padding: 0.5rem 1.1rem;
+    font-family: var(--sans); font-size: 0.8rem; font-weight: 500;
+    color: var(--muted); cursor: pointer;
+    transition: all 0.2s; display: flex; align-items: center; gap: 0.5rem;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  }
+  .mode-toggle-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--off-white);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 4rem;
+    background: var(--nav-bg);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--mid);
+    transition: background 0.3s, border-color 0.3s;
+  }
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 1.25rem;
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.875rem; font-weight: 500; color: var(--muted);
+    text-decoration: none; letter-spacing: 0.04em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 80px;
+  }
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 6rem 4rem 6rem 4rem;
+  }
+  .hero-tag {
+    display: inline-block;
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--accent);
+    background: var(--accent-light);
+    padding: 0.4rem 0.9rem; border-radius: 2rem;
+    margin-bottom: 2rem; width: fit-content;
+  }
+  .hero-name {
+    font-family: var(--serif);
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    line-height: 1.05; letter-spacing: -0.03em;
+    color: var(--text); margin-bottom: 1.5rem;
+  }
+  .hero-name em { font-style: italic; color: var(--accent); }
+  .hero-sub {
+    font-size: 1.1rem; font-weight: 300; color: var(--muted);
+    max-width: 420px; margin-bottom: 3rem; line-height: 1.7;
+  }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.85rem 1.75rem;
+    font-family: var(--sans); font-size: 0.9rem; font-weight: 500;
+    text-decoration: none; border-radius: 0.375rem;
+    transition: all 0.2s; cursor: pointer; border: none;
+  }
+  .btn-primary { background: var(--accent); color: white; }
+  .btn-primary:hover { background: var(--accent-dark); transform: translateY(-1px); }
+  .btn-outline { background: transparent; color: var(--text); border: 1.5px solid var(--mid); }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+
+  .hero-right {
+    background: var(--light);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    transition: background 0.3s;
+  }
+  .hero-right::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 30%, var(--accent-light) 0%, transparent 60%);
+  }
+  .hero-visual {
+    position: relative; z-index: 1;
+    text-align: center; padding: 3rem;
+  }
+  .hero-avatar {
+    width: 220px; height: 220px; border-radius: 50%;
+    background: var(--mid);
+    margin: 0 auto 2rem;
+    display: flex; align-items: center; justify-content: center;
+    border: 4px solid var(--white);
+    box-shadow: 0 20px 60px rgba(0,123,138,0.15);
+    overflow: hidden;
+  }
+  .hero-avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .hero-avatar-placeholder {
+    font-family: var(--serif); font-size: 5rem;
+    color: var(--muted); line-height: 1;
+  }
+  .hero-skills { display: flex; gap: 0.6rem; flex-wrap: wrap; justify-content: center; }
+  .skill-chip {
+    font-size: 0.75rem; font-weight: 500;
+    padding: 0.35rem 0.8rem;
+    background: var(--white); color: var(--muted);
+    border-radius: 2rem; border: 1px solid var(--mid);
+    transition: background 0.3s, color 0.3s;
+  }
+
+  /* SECTIONS */
+  section { padding: 6rem 4rem; }
+  .section-label {
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4vw, 3rem);
+    letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 1rem;
+  }
+  .section-sub {
+    color: var(--muted); font-size: 1rem; font-weight: 300;
+    max-width: 520px; margin-bottom: 3.5rem; line-height: 1.7;
+  }
+
+  /* ABOUT */
+  .about { background: var(--white); transition: background 0.3s; }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
+    align-items: start; max-width: 1100px; margin: 0 auto;
+  }
+  .about-text p {
+    color: var(--muted); font-weight: 300; line-height: 1.8;
+    margin-bottom: 1.2rem; font-size: 1rem;
+  }
+  .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .stat-card {
+    background: var(--off-white); border-radius: 0.75rem;
+    padding: 1.5rem; border: 1px solid var(--light);
+    transition: background 0.3s, border-color 0.3s;
+  }
+  .stat-number {
+    font-family: var(--serif); font-size: 2.5rem;
+    color: var(--accent); line-height: 1; margin-bottom: 0.4rem;
+  }
+  .stat-label { font-size: 0.8rem; color: var(--muted); font-weight: 500; }
+
+  /* PROJECTS */
+  .projects { background: var(--off-white); transition: background 0.3s; }
+  .projects-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1.75rem; max-width: 1200px; margin: 0 auto;
+  }
+  .project-card {
+    background: var(--card-bg); border-radius: 1rem;
+    border: 1px solid var(--light); overflow: hidden;
+    transition: transform 0.25s, box-shadow 0.25s, background 0.3s, border-color 0.3s;
+  }
+  .project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+  }
+  .project-media {
+    aspect-ratio: 16/9; background: var(--light);
+    position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .project-media iframe { width: 100%; height: 100%; border: none; pointer-events: none; }
+  .project-media-placeholder {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 0.75rem; width: 100%; height: 100%; color: var(--muted);
+  }
+  .project-media-placeholder .icon { font-size: 2.5rem; opacity: 0.4; }
+  .project-media-placeholder span {
+    font-size: 0.78rem; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.5;
+  }
+  .project-body { padding: 1.5rem; }
+  .project-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.9rem; }
+  .project-tag {
+    font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--accent);
+    background: var(--accent-light); padding: 0.25rem 0.6rem; border-radius: 0.25rem;
+  }
+  .project-title {
+    font-family: var(--serif); font-size: 1.35rem;
+    letter-spacing: -0.01em; margin-bottom: 0.6rem; color: var(--text);
+  }
+  .project-desc {
+    font-size: 0.875rem; color: var(--muted);
+    line-height: 1.65; margin-bottom: 1.25rem; font-weight: 300;
+  }
+  .project-tech { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .tech-pill {
+    font-size: 0.72rem; padding: 0.25rem 0.65rem;
+    background: var(--off-white); color: var(--muted);
+    border-radius: 2rem; border: 1px solid var(--mid); font-weight: 500;
+    transition: background 0.3s, border-color 0.3s;
+  }
+
+  /* SKILLS */
+  .skills-section { background: var(--white); transition: background 0.3s; }
+  .skills-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.25rem; max-width: 1100px; margin: 0 auto;
+  }
+  .skill-card {
+    background: var(--off-white); border-radius: 0.75rem;
+    padding: 1.5rem; border: 1px solid var(--light);
+    transition: background 0.3s, border-color 0.3s;
+  }
+  .skill-card-label {
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 0.9rem;
+  }
+  .skill-list { list-style: none; }
+  .skill-list li {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.45rem 0; border-bottom: 1px solid var(--light);
+    font-size: 0.875rem; color: var(--text); font-weight: 400;
+    transition: border-color 0.3s;
+  }
+  .skill-list li:last-child { border-bottom: none; }
+  .skill-level { font-size: 0.72rem; color: var(--muted); font-weight: 500; }
+
+  /* CONTACT */
+  .contact {
+    background: var(--text); color: var(--off-white);
+    text-align: center; transition: background 0.3s;
+  }
+  .contact .section-label { color: var(--accent); }
+  .contact .section-title { color: var(--off-white); margin: 0 auto 1rem; }
+  .contact .section-sub { color: rgba(255,255,255,0.4); margin: 0 auto 2.5rem; }
+  .contact-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .contact .btn-outline { color: var(--off-white); border-color: rgba(255,255,255,0.2); }
+  .contact .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  footer {
+    background: var(--text); border-top: 1px solid rgba(255,255,255,0.07);
+    padding: 1.5rem 4rem; text-align: center;
+    font-size: 0.8rem; color: rgba(255,255,255,0.25);
+    transition: background 0.3s;
+  }
+
+  /* ANIMATIONS */
+  .fade-in {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .hero-left { padding: 6rem 1.5rem 3rem; }
+    section { padding: 4rem 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .projects-grid { grid-template-columns: 1fr; }
+    footer { padding: 1.5rem; }
+    .mode-options { flex-direction: column; align-items: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- MODE SELECTOR OVERLAY -->
+<div id="mode-overlay">
+  <div class="mode-selector">
+    <h1 class="mode-greeting">Willkommen bei<br><em>Ömer Ören</em></h1>
+    <p class="mode-sub">Wähle dein bevorzugtes Design</p>
+    <div class="mode-options">
+      <div class="mode-btn" onclick="selectMode('light')">
+        <span class="mode-icon">☀️</span>
+        <span class="mode-label">Light Mode</span>
+        <span class="mode-desc">Hell & clean</span>
+      </div>
+      <div class="mode-btn" onclick="selectMode('dark')">
+        <span class="mode-icon">🌙</span>
+        <span class="mode-label">Dark Mode</span>
+        <span class="mode-desc">Dunkel & atmosphärisch</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOGGLE BUTTON (appears after mode selection) -->
+<button class="mode-toggle-btn" id="toggle-btn" onclick="toggleMode()" style="display:none;">
+  <span id="toggle-icon">🌙</span>
+  <span id="toggle-label">Dark Mode</span>
+</button>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Ömer Ören</a>
+  <ul class="nav-links">
+    <li><a href="#about">Über mich</a></li>
+    <li><a href="#projects">Projekte</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Kontakt</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <span class="hero-tag">Game Designer & Developer · Berlin</span>
+    <h1 class="hero-name">Ömer<br><em>Ören</em></h1>
+    <p class="hero-sub">
+      Game Design Bachelor (IU) mit Leidenschaft für Spielmechaniken, 3D-Assets und mobile Entwicklung. Von der Idee bis zum fertigen Prototyp.
+    </p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn btn-primary">Projekte ansehen</a>
+      <a href="mailto:oemer.oeren@outlook.com" class="btn btn-outline">Kontakt aufnehmen</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-visual">
+      <div class="hero-avatar">
+        <!-- DEIN FOTO: Ersetze mit: <img src="foto.jpg" alt="Ömer Ören"> -->
+        <span class="hero-avatar-placeholder">Ö</span>
+      </div>
+      <div class="hero-skills">
+        <span class="skill-chip">Unity</span>
+        <span class="skill-chip">Blender</span>
+        <span class="skill-chip">C#</span>
+        <span class="skill-chip">Photoshop</span>
+        <span class="skill-chip">Android</span>
+        <span class="skill-chip">Game Design</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-grid">
+    <div class="about-text fade-in">
+      <p class="section-label">Über mich</p>
+      <h2 class="section-title">Spieler. Gestalter. Entwickler.</h2>
+      <p>Game Design Bachelor (B.A.) — abgeschlossen 2026 an der IU Internationale Hochschule. Seitdem sitze ich weiter an eigenen Projekten: Unity-Prototypen, 3D-Assets in Blender und vollständige Android-Apps.</p>
+      <p>Mein Fokus liegt auf dem kompletten Prozess: vom ersten Konzept über 3D-Modellierung und Implementierung in Unity bis zur fertigen APK. Spiele bauen ist für mich kein Hobby — es ist der Plan.</p>
+      <p>Parallel arbeite ich in Teilzeit im E-Commerce, wo ich über mehrere Jahre Verantwortung in Teamkoordination, Content-Erstellung und Lieferantenkommunikation übernommen habe.</p>
+    </div>
+    <div class="about-stats fade-in">
+      <div class="stat-card">
+        <div class="stat-number">4+</div>
+        <div class="stat-label">Jahre Unity-Erfahrung</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">6+</div>
+        <div class="stat-label">Eigene Projekte</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">3</div>
+        <div class="stat-label">Sprachen fließend</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">B.A.</div>
+        <div class="stat-label">Game Design, IU 2026</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects" id="projects">
+  <div style="max-width:1200px;margin:0 auto;">
+    <p class="section-label">Portfolio</p>
+    <h2 class="section-title">Projekte</h2>
+    <p class="section-sub">Eigene Entwicklungen und Uni-Prototypen — von der ersten Idee bis zum spielbaren Build.</p>
+    <div class="projects-grid">
+
+      <div class="project-card fade-in">
+        <div class="project-media">
+          <!-- VIDEO: <iframe src="https://www.youtube.com/embed/VIDEO_ID?autoplay=1&mute=1&loop=1&playlist=VIDEO_ID" allowfullscreen></iframe> -->
+          <div class="project-media-placeholder"><span class="icon">🎮</span><span>Gameplay-Video folgt</span></div>
+        </div>
+        <div class="project-body">
+          <div class="project-tags"><span class="project-tag">Unity</span><span class="project-tag">Uni-Projekt</span></div>
+          <h3 class="project-title">First Person Stealth</h3>
+          <p class="project-desc">Stealth-Spiel aus der Egoperspektive mit Mikrofon-Input — Geräusche des Spielers beeinflussen das Gameplay direkt.</p>
+          <div class="project-tech"><span class="tech-pill">Unity</span><span class="tech-pill">C#</span><span class="tech-pill">Mikrofon-API</span></div>
+        </div>
+      </div>
+
+      <div class="project-card fade-in">
+        <div class="project-media">
+          <div class="project-media-placeholder"><span class="icon">⚔️</span><span>Gameplay-Video folgt</span></div>
+        </div>
+        <div class="project-body">
+          <div class="project-tags"><span class="project-tag">Unity</span><span class="project-tag">Uni-Projekt</span></div>
+          <h3 class="project-title">Metroidvania Fantasy</h3>
+          <p class="project-desc">2D-Fantasy-Prototyp mit vernetztem Level-Design und komplexem Ability-Gating — klassische Metroidvania-Mechaniken in einer eigenen Fantasywelt.</p>
+          <div class="project-tech"><span class="tech-pill">Unity</span><span class="tech-pill">C#</span><span class="tech-pill">2D Level Design</span></div>
+        </div>
+      </div>
+
+      <div class="project-card fade-in">
+        <div class="project-media">
+          <div class="project-media-placeholder"><span class="icon">🐦</span><span>Gameplay-Video folgt</span></div>
+        </div>
+        <div class="project-body">
+          <div class="project-tags"><span class="project-tag">Unity</span><span class="project-tag">Mobile</span></div>
+          <h3 class="project-title">Flappy Bird Klon</h3>
+          <p class="project-desc">Physikbasierter Mobile-Prototyp — eigenständige Neuinterpretation des Klassikers als Unity-Lernprojekt.</p>
+          <div class="project-tech"><span class="tech-pill">Unity</span><span class="tech-pill">C#</span><span class="tech-pill">Android</span></div>
+        </div>
+      </div>
+
+      <div class="project-card fade-in">
+        <div class="project-media">
+          <!-- SCREENSHOT: <img src="dragons.jpg" style="width:100%;height:100%;object-fit:cover;"> -->
+          <div class="project-media-placeholder"><span class="icon">🐉</span><span>Screenshots folgen</span></div>
+        </div>
+        <div class="project-body">
+          <div class="project-tags"><span class="project-tag">Blender</span><span class="project-tag">3D Art</span></div>
+          <h3 class="project-title">3D Assets — Drachen & Eier</h3>
+          <p class="project-desc">Zwei vollständig modellierte Drachen sowie Dracheneier in Blender — organisches und hartes Surface-Modeling kombiniert.</p>
+          <div class="project-tech"><span class="tech-pill">Blender</span><span class="tech-pill">3D Modelling</span><span class="tech-pill">Texturing</span></div>
+        </div>
+      </div>
+
+      <div class="project-card fade-in">
+        <div class="project-media">
+          <div class="project-media-placeholder"><span class="icon">🥗</span><span>App-Video folgt</span></div>
+        </div>
+        <div class="project-body">
+          <div class="project-tags"><span class="project-tag">Android</span><span class="project-tag">App</span></div>
+          <h3 class="project-title">Makros — Kalorienzähler</h3>
+          <p class="project-desc">Vollständige Android-App zum Tracken von Kalorien und Makronährstoffen mit Barcode-Scanner und Open Food Facts Integration.</p>
+          <div class="project-tech"><span class="tech-pill">PWA</span><span class="tech-pill">Android Studio</span><span class="tech-pill">Barcode API</span></div>
+        </div>
+      </div>
+
+      <div class="project-card fade-in">
+        <div class="project-media">
+          <div class="project-media-placeholder"><span class="icon">🦦</span><span>App-Video folgt</span></div>
+        </div>
+        <div class="project-body">
+          <div class="project-tags"><span class="project-tag">Android</span><span class="project-tag">App</span></div>
+          <h3 class="project-title">Otty — Habit Tracker</h3>
+          <p class="project-desc">Habit-Tracking-App mit Otter-Maskottchen, Streak-System, Badges und Dark Mode — zweisprachig auf Deutsch und Englisch.</p>
+          <div class="project-tech"><span class="tech-pill">PWA</span><span class="tech-pill">Android Studio</span><span class="tech-pill">DE/EN i18n</span></div>
+        </div>
+      </div>
+
+      <div class="project-card fade-in">
+        <div class="project-media">
+          <div class="project-media-placeholder"><span class="icon">💪</span><span>App-Video folgt</span></div>
+        </div>
+        <div class="project-body">
+          <div class="project-tags"><span class="project-tag">Android</span><span class="project-tag">App</span></div>
+          <h3 class="project-title">Gym Timer App</h3>
+          <p class="project-desc">Trainingszähler-App mit Web Audio API Alarmen, Set-Tracking und einem interaktiven SVG-Muskeldiagramm — synchronisiert mit eigenem PPL-Trainingsplan.</p>
+          <div class="project-tech"><span class="tech-pill">PWA</span><span class="tech-pill">Web Audio API</span><span class="tech-pill">SVG</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills-section" id="skills">
+  <div style="max-width:1100px;margin:0 auto;">
+    <p class="section-label">Kenntnisse</p>
+    <h2 class="section-title">Skills & Tools</h2>
+    <p class="section-sub">Tools und Technologien die ich in meinen Projekten einsetze.</p>
+    <div class="skills-grid">
+      <div class="skill-card fade-in">
+        <p class="skill-card-label">Game Development</p>
+        <ul class="skill-list">
+          <li>Unity <span class="skill-level">Gut</span></li>
+          <li>C# <span class="skill-level">Grundkenntnisse</span></li>
+          <li>Blender <span class="skill-level">Gut</span></li>
+          <li>Game Design <span class="skill-level">B.A. 2026</span></li>
+        </ul>
+      </div>
+      <div class="skill-card fade-in">
+        <p class="skill-card-label">Design & Media</p>
+        <ul class="skill-list">
+          <li>Adobe Photoshop <span class="skill-level">Sehr gut</span></li>
+          <li>Premiere Pro <span class="skill-level">Gut</span></li>
+          <li>Krita <span class="skill-level">Gut</span></li>
+          <li>Adobe Firefly <span class="skill-level">Gut</span></li>
+        </ul>
+      </div>
+      <div class="skill-card fade-in">
+        <p class="skill-card-label">Entwicklung</p>
+        <ul class="skill-list">
+          <li>HTML / CSS <span class="skill-level">Gut</span></li>
+          <li>Python <span class="skill-level">Grundkenntnisse</span></li>
+          <li>Android Studio <span class="skill-level">Gut</span></li>
+          <li>PWA Development <span class="skill-level">Gut</span></li>
+        </ul>
+      </div>
+      <div class="skill-card fade-in">
+        <p class="skill-card-label">Sprachen</p>
+        <ul class="skill-list">
+          <li>Deutsch <span class="skill-level">Fließend</span></li>
+          <li>Englisch <span class="skill-level">Fließend</span></li>
+          <li>Türkisch <span class="skill-level">Fließend</span></li>
+          <li>Französisch <span class="skill-level">Grundkenntnisse</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <p class="section-label">Kontakt</p>
+  <h2 class="section-title">Lass uns reden.</h2>
+  <p class="section-sub">Offen für Praktika, Junior-Positionen und spannende Game-Projekte.</p>
+  <div class="contact-links">
+    <a href="mailto:oemer.oeren@outlook.com" class="btn btn-primary">✉ E-Mail schreiben</a>
+    <a href="https://github.com" class="btn btn-outline" target="_blank">GitHub</a>
+    <a href="#" class="btn btn-outline">LinkedIn</a>
+  </div>
+</section>
+
+<footer>
+  © 2026 Ömer Ören · Berlin · Game Designer & Developer
+</footer>
+
+<script>
+  let currentMode = 'light';
+
+  function selectMode(mode) {
+    currentMode = mode;
+    applyMode(mode);
+    const overlay = document.getElementById('mode-overlay');
+    overlay.classList.add('hidden');
+    setTimeout(() => overlay.style.display = 'none', 600);
+    const btn = document.getElementById('toggle-btn');
+    btn.style.display = 'flex';
+    updateToggleBtn();
+  }
+
+  function applyMode(mode) {
+    if (mode === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
+  }
+
+  function toggleMode() {
+    currentMode = currentMode === 'light' ? 'dark' : 'light';
+    applyMode(currentMode);
+    updateToggleBtn();
+  }
+
+  function updateToggleBtn() {
+    document.getElementById('toggle-icon').textContent = currentMode === 'light' ? '🌙' : '☀️';
+    document.getElementById('toggle-label').textContent = currentMode === 'light' ? 'Dark Mode' : 'Light Mode';
+  }
+
+  // Scroll fade-in
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
