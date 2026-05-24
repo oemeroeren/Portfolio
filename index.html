@@ -168,9 +168,26 @@
     .modal-body{padding:1.5rem;}
     .mode-options{flex-direction:column;align-items:center;}
   }
+
+  /* LIGHTBOX */
+  #lightbox{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.92);display:none;align-items:center;justify-content:center;padding:2rem;}
+  #lightbox.open{display:flex;}
+  #lightbox img{max-width:90vw;max-height:85vh;border-radius:0.5rem;object-fit:contain;}
+  #lightbox-close{position:absolute;top:1.5rem;right:1.5rem;background:rgba(255,255,255,0.1);border:none;color:white;font-size:1.5rem;width:44px;height:44px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+  #lightbox-close:hover{background:rgba(255,255,255,0.2);}
+  .modal-img{cursor:zoom-in;transition:opacity 0.2s;}
+  .modal-img:hover{opacity:0.85;}
+
 </style>
 </head>
 <body>
+
+
+<!-- LIGHTBOX -->
+<div id="lightbox" onclick="closeLightbox(event)">
+  <button id="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
 
 <!-- OVERLAY -->
 <div id="mode-overlay">
@@ -280,7 +297,7 @@
 
       <div class="project-card fade-in" onclick="openModal('metroid')">
         <div class="project-media">
-          <div class="project-media-placeholder"><span class="icon">⚔️</span><span data-i18n="img-soon">Screenshots folgen</span></div>
+          <img src="assets/metroid/TitleScreen.png" alt="Ashella — Heels over Head" style="width:100%;height:100%;object-fit:cover;">
         </div>
         <div class="project-body">
           <div class="project-tags"><span class="project-tag">Unity</span><span class="project-tag" data-i18n="tag-uni">Uni-Projekt</span></div>
@@ -497,13 +514,41 @@ const projects = {
     tech:['Unity','C#','3rd Person Controller','Blender','Krita','Photoshop']
   },
   metroid:{
-    cover:null,
+    cover:'assets/metroid/TitleScreen.png',
     tags:{de:['Unity','C#','2D','Uni-Projekt'],en:['Unity','C#','2D','Uni Project']},
-    title:'Metroidvania Fantasy',
-    subtitle:{de:'2D Action-Adventure · Uni-Prototyp',en:'2D Action-Adventure · University Prototype'},
-    overview:{de:'Ein 2D-Fantasy-Prototyp mit klassischen Metroidvania-Mechaniken: vernetzte Level, Ability-Gating und eine eigene Fantasywelt. Screenshots folgen.',en:'A 2D fantasy prototype featuring classic Metroidvania mechanics: interconnected levels, ability gating and an original fantasy world. Screenshots coming soon.'},
-    features:{de:['🗺️ Vernetztes Level-Design','⚡ Ability-Gating System','⚔️ 2D Kampf-Mechaniken','🌍 Eigene Fantasywelt'],en:['🗺️ Interconnected level design','⚡ Ability gating system','⚔️ 2D combat mechanics','🌍 Original fantasy world']},
-    video:null,images:[],tech:['Unity','C#','2D Level Design','Tilemaps']
+    title:'Ashella — Heels over Head',
+    subtitle:{de:'2D Metroidvania · Märchen-Neuinterpretation · Uni-Prototyp',en:'2D Metroidvania · Fairy Tale Reimagining · University Prototype'},
+    overview:{
+      de:'Eine Neuinterpretation des Aschenputtel-Märchens als 2D-Metroidvania. Die Protagonistin Ashella wurde von ihrer bösen Stiefmutter in den Keller eingesperrt — am Abend nach dem königlichen Ball. Mit Hilfe einer Taube macht sie sich auf, den magischen Schuh wiederzufinden, der sie beim Prinzen in Erscheinung treten lässt. Die Hauptmechanik: Ashella schießt ihre Schuhe als Waffe nach vorne — muss sie aber wieder aufheben, bevor sie erneut angreifen kann. Das erzeugt einen einzigartigen Rhythmus zwischen Angriff, Manövrieren und Ressourcenmanagement.',
+      en:'A reimagining of the Cinderella fairy tale as a 2D Metroidvania. Protagonist Ashella has been locked in the cellar by her evil stepmother — the night after the royal ball. With the help of a pigeon she sets out to reclaim the magical shoe that reveals her true appearance to the prince. The core mechanic: Ashella fires her shoes as projectiles — but must pick them up before attacking again, creating a unique rhythm of combat, maneuvering and resource management.'
+    },
+    features:{
+      de:['👟 Schuhe als Wurfwaffe — aufheben zum Nachladen','🕊️ Taube als Spezialleiste','🗺️ Vernetztes Level-Design','⚡ Ability-Gating (z.B. Doppelsprung)','🍄 Mini-Boss: Riesenpilz','🌳 Untergrund-Areal mit Riesenbaum','🎯 Tutorial-Level','🧪 Kontrollpunkte & Schatzsystem'],
+      en:['👟 Shoes as throwable weapons — pick up to reload','🕊️ Pigeon special meter','🗺️ Interconnected level design','⚡ Ability gating (e.g. double jump)','🍄 Mini-boss: giant mushroom','🌳 Underground area with giant tree','🎯 Tutorial level','🧪 Checkpoints & treasure system']
+    },
+    video:'https://www.youtube.com/embed/o-fOvZSZJWk?rel=0',
+    images:[
+      'assets/metroid/TitleScreen.png',
+      'assets/metroid/TutorialLevelAshella.png',
+      'assets/metroid/bigTree.png',
+      'assets/metroid/conceptartCharacter.png',
+      'assets/metroid/ConceptartCharacterPowerup.png',
+      'assets/metroid/AshellaFire.png',
+      'assets/metroid/ashellaNormal.png',
+      'assets/metroid/MiniBoss.png',
+      'assets/metroid/shroomsmall.png',
+      'assets/metroid/burningShoe.png',
+      'assets/metroid/fireShoe.png',
+      'assets/metroid/Shoe_Full.png',
+      'assets/metroid/Shoe_Empty.png',
+      'assets/metroid/pigeon.png',
+      'assets/metroid/vine.png'
+    ],
+    imglabels:{
+      de:['Titelscreen','Tutorial-Level','Riesenbaum Untergrund','Konzeptart Charakter','Konzeptart Powerup','Ashella (Feuer)','Ashella (Normal)','Mini-Boss','Pilz-Gegner','Burning Shoe','Fire Shoe','Schuh voll','Schuh leer','Taube','Ranke'],
+      en:['Title Screen','Tutorial Level','Giant Tree Underground','Concept Art Character','Concept Art Powerup','Ashella (Fire)','Ashella (Normal)','Mini-Boss','Mushroom Enemy','Burning Shoe','Fire Shoe','Shoe Full','Shoe Empty','Pigeon','Vine']
+    },
+    tech:['Unity','C#','2D Tilemaps','Krita','Procreate','Level Design']
   },
   flappy:{
     cover:null,
@@ -571,7 +616,7 @@ function openModal(id) {
 
   const imagesHTML = p.images && p.images.length > 0
     ? `<div class="modal-section-title">${lang==='de'?'Bilder & Konzepte':'Images & Concepts'}</div>
-       <div class="modal-images">${p.images.map((img,i) => `<img src="${img}" class="modal-img" alt="${p.imglabels?.[lang]?.[i]||img}">`).join('')}</div>`
+       <div class="modal-images">${p.images.map((img,i) => `<img src="${img}" class="modal-img" alt="${p.imglabels?.[lang]?.[i]||img}" onclick="openLightbox(this.src, this.alt)">`).join('')}</div>`
     : '';
 
   document.getElementById('modal-content').innerHTML = `
@@ -604,7 +649,7 @@ function closeModalOutside(e) {
   if (e.target === document.getElementById('modal-overlay')) closeModal();
 }
 
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeLightbox(); } });
 
 // ---- Mode selector ----
 let currentLang = null, currentTheme = null;
@@ -639,6 +684,21 @@ const observer = new IntersectionObserver(entries=>{
   entries.forEach((e,i)=>{ if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*80);observer.unobserve(e.target);} });
 },{threshold:0.1});
 document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+
+function openLightbox(src, alt) {
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox-img').alt = alt || '';
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox(e) {
+  if (!e || e.target !== document.getElementById('lightbox-img')) {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
 </script>
 </body>
 </html>
