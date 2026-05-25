@@ -336,7 +336,7 @@
 
       <div class="project-card fade-in" onclick="openModal('makros')">
         <div class="project-media">
-          <div class="project-media-placeholder"><span class="icon">🥗</span><span data-i18n="img-soon">Screenshots folgen</span></div>
+          <img src="assets/makros/Screenshot_20260525_132341_Makros.jpg" alt="Makros App" style="width:100%;height:100%;object-fit:contain;padding:0.5rem;background:var(--light);">
         </div>
         <div class="project-body">
           <div class="project-tags"><span class="project-tag">Android</span><span class="project-tag">App</span></div>
@@ -597,13 +597,32 @@ const projects = {
     tech:['Nomad Sculpt','Procreate','Blender','Unity','UV Mapping','Shader Graph','URP','Emission']
   },
   makros:{
-    cover:null,
+    cover:'assets/makros/Screenshot_20260525_132341_Makros.jpg',
     tags:{de:['Android','PWA','App'],en:['Android','PWA','App']},
     title:'Makros',
     subtitle:{de:'Kalorienzähler & Makro-Tracker · Android App · 2026',en:'Calorie & Macro Tracker · Android App · 2026'},
-    overview:{de:'Vollständige Android-App zum Tracken von Kalorien und Makronährstoffen. Mit Barcode-Scanner, Open Food Facts API-Integration, eigenem Lebensmittel-Datenbank, Makro-Visualisierung und Datumsnavigation. Komplett offline-fähig mit Online-Suche. Screenshots folgen.',en:'Full Android app for tracking calories and macronutrients. Features barcode scanner, Open Food Facts API integration, custom food database, macro visualisation and date navigation. Fully offline-capable with online search. Screenshots coming soon.'},
-    features:{de:['📸 Barcode-Scanner','🌐 Open Food Facts API','📊 Makro-Visualisierung','📅 Datumsnavigation','💾 Lokale Datenbank','📱 Offline-fähig'],en:['📸 Barcode scanner','🌐 Open Food Facts API','📊 Macro visualisation','📅 Date navigation','💾 Local database','📱 Offline capable']},
-    video:null,images:[],tech:['HTML/CSS/JS','PWA','Android Studio','Open Food Facts API']
+    overview:{
+      de:'Makros ist eine vollständige Android-App zum Tracken von Kalorien und Makronährstoffen — entwickelt als persönliches Tool für den eigenen Alltag. Die App kombiniert einen Barcode-Scanner mit der Open Food Facts API, sodass Lebensmittel direkt per Kamera erfasst werden können. Eine eigene Lebensmitteldatenbank, Makro-Visualisierung und Datumsnavigation runden die App ab. Entwickelt als PWA und über Android Studio als APK gebaut.',
+      en:'Makros is a full Android app for tracking calories and macronutrients — built as a personal tool for everyday use. The app combines a barcode scanner with the Open Food Facts API so food items can be captured directly via camera. A custom food database, macro visualisation and date navigation complete the experience. Built as a PWA and packaged as an APK via Android Studio.'
+    },
+    features:{
+      de:['📸 Barcode-Scanner (Kamera)','🌐 Open Food Facts API Integration','📊 Makro-Visualisierung (Protein, Kohlenhydrate, Fett)','📅 Datumsnavigation','💾 Lokale Lebensmitteldatenbank','📱 PWA → Android APK','🔍 Online-Suche nach Lebensmitteln'],
+      en:['📸 Barcode scanner (camera)','🌐 Open Food Facts API integration','📊 Macro visualisation (protein, carbs, fat)','📅 Date navigation','💾 Local food database','📱 PWA → Android APK','🔍 Online food search']
+    },
+    video:null,
+    images:[
+      'assets/makros/Screenshot_20260525_132341_Makros.jpg',
+      'assets/makros/Screenshot_20260525_132351_Makros.jpg',
+      'assets/makros/Screenshot_20260525_132354_Makros.jpg',
+      'assets/makros/Screenshot_20260525_132406_Makros.jpg',
+      'assets/makros/Screenshot_20260525_132417_Makros.jpg',
+      'assets/makros/Screenshot_20260525_132737_Makros.jpg'
+    ],
+    imglabels:{
+      de:['Hauptscreen','Tagesübersicht','Makro-Tracking','Barcode-Scanner','Lebensmittelsuche','Datenbank'],
+      en:['Main screen','Daily overview','Macro tracking','Barcode scanner','Food search','Database']
+    },
+    tech:['HTML/CSS/JS','PWA','Android Studio','Open Food Facts API','Barcode Scanner']
   },
   otty:{
     cover:null,
