@@ -323,7 +323,7 @@
 
       <div class="project-card fade-in" onclick="openModal('dragons')">
         <div class="project-media">
-          <div class="project-media-placeholder"><span class="icon">🐉</span><span data-i18n="img-soon">Screenshots folgen</span></div>
+          <img src="assets/dragons/3D_Render_Screenshot_Ömer_Ören.jpg" alt="3D Dragon Render" style="width:100%;height:100%;object-fit:contain;padding:0.5rem;background:var(--light);">
         </div>
         <div class="project-body">
           <div class="project-tags"><span class="project-tag">Blender</span><span class="project-tag">3D Art</span></div>
@@ -558,13 +558,43 @@ const projects = {
     video:null,images:['assets/flappy/2026-05-2512-09-53-ezgif.com-video-to-gif-converter.gif'],imglabels:{de:['Gameplay'],en:['Gameplay']},tech:['Unity','C#','Android','Physics2D']
   },
   dragons:{
-    cover:null,
-    tags:{de:['Blender','3D Art'],en:['Blender','3D Art']},
-    title:{de:'3D Assets — Drachen & Eier',en:'3D Assets — Dragons & Eggs'},
-    subtitle:{de:'3D Modellierung · Texturing · Blender',en:'3D Modelling · Texturing · Blender'},
-    overview:{de:'Zwei vollständig modellierte Drachen sowie Dracheneier in Blender — organisches und hartes Surface-Modeling kombiniert. Screenshots folgen.',en:'Two fully modelled dragons and dragon eggs in Blender — combining organic and hard surface modelling. Screenshots coming soon.'},
-    features:{de:['🐉 Organisches Surface-Modeling','🥚 Hard Surface Modeling','🎨 Texturing & UV-Mapping','💡 Beleuchtung & Rendering'],en:['🐉 Organic surface modelling','🥚 Hard surface modelling','🎨 Texturing & UV mapping','💡 Lighting & rendering']},
-    video:null,images:[],tech:['Blender','3D Modelling','UV Mapping','Texturing']
+    cover:'assets/dragons/3D_Render_Screenshot_Ömer_Ören.jpg',
+    tags:{de:['Nomad Sculpt','Blender','Unity','3D Art','Uni-Projekt'],en:['Nomad Sculpt','Blender','Unity','3D Art','Uni Project']},
+    title:{de:'3D Game Assets — Drachen & Ei',en:'3D Game Assets — Dragons & Egg'},
+    subtitle:{de:'3D Modellierung · Texturing · Nomad Sculpt · Blender · Unity · Uni-Projekt 2023',en:'3D Modelling · Texturing · Nomad Sculpt · Blender · Unity · University Project 2023'},
+    overview:{
+      de:'Mein erstes 3D-Modellierungsprojekt — und direkt ein komplexes: Ein Drachenei mit Flügeln, ein Eisdrache mit Glasästhetik und ein Feuerdrache, modelliert und texturiert in Nomad Sculpt auf dem iPad, weiterverarbeitet in Blender und schließlich in Unity als fertige Szene gerendert. Das Projekt hat mir nicht nur 3D-Modellierung beigebracht, sondern auch den kompletten Pipeline-Workflow von Nomad Sculpt über Blender bis Unity — inklusive UV-Unwrapping, Shader Graphs, URP/HDRP und Emission-Effekten.',
+      en:'My first 3D modelling project — and a complex one right away: a dragon egg with wings, an ice dragon with a glass aesthetic and a fire dragon, all modelled and textured in Nomad Sculpt on iPad, processed in Blender and finally rendered as a complete scene in Unity. The project taught me not only 3D modelling but the complete pipeline workflow from Nomad Sculpt through Blender to Unity — including UV unwrapping, shader graphs, URP/HDRP and emission effects.'
+    },
+    features:{
+      de:['🥚 Drachenei mit Flügeln & Symbolen (Nomad Sculpt)','🐉 Eisdrache mit Glas-Shader (Shader Graph / URP)','🔥 Feuerdrache mit Flammenmähne & Narben','🎨 Custom Texturen via Procreate Brushes','🗺️ UV-Unwrapping & UV-Export aus Blender','✨ Emission-Effekte in Unity','💡 Lightbox-Rendering in Unity','🔄 Workflow: Nomad Sculpt → Blender → Unity'],
+      en:['🥚 Dragon egg with wings & symbols (Nomad Sculpt)','🐉 Ice dragon with glass shader (Shader Graph / URP)','🔥 Fire dragon with flame mane & battle scars','🎨 Custom textures via Procreate brushes','🗺️ UV unwrapping & UV export from Blender','✨ Emission effects in Unity','💡 Lightbox rendering in Unity','🔄 Workflow: Nomad Sculpt → Blender → Unity']
+    },
+    video:null,
+    images:[
+      'assets/dragons/3D_Render_Screenshot_Ömer_Ören.jpg',
+      'assets/dragons/dragon.png',
+      'assets/dragons/Firedragon.png',
+      'assets/dragons/DragonHead.png',
+      'assets/dragons/dragonheart.png',
+      'assets/dragons/Egg.jpg',
+      'assets/dragons/eggNoPaint.png',
+      'assets/dragons/conceptartEgg.jpg',
+      'assets/dragons/ConceptDad.jpg',
+      'assets/dragons/ConceptartMom.jpg',
+      'assets/dragons/ConceptMom2.jpg',
+      'assets/dragons/conceptFire.jpg',
+      'assets/dragons/makingofmom.jpg',
+      'assets/dragons/Skin.jpg',
+      'assets/dragons/texture.jpg',
+      'assets/dragons/El(1).png',
+      'assets/dragons/fire(1).png'
+    ],
+    imglabels:{
+      de:['Final Render (Unity)','Eisdrache','Feuerdrache','Drachenkopf','Drachen Herz','Drachenei (texturiert)','Drachenei (ohne Textur)','Konzeptart Ei','Konzeptart Vater (Feuerdrache)','Konzeptart Mutter (Eisdrache)','Konzeptart Mutter 2','Konzeptart Flamme','Making Of: Modellierung','Skin Textur','Textur Brush','Element','Flamme'],
+      en:['Final Render (Unity)','Ice Dragon','Fire Dragon','Dragon Head','Dragon Heart','Dragon Egg (textured)','Dragon Egg (no texture)','Concept Art Egg','Concept Art Father (Fire Dragon)','Concept Art Mother (Ice Dragon)','Concept Art Mother 2','Concept Art Flame','Making Of: Modelling','Skin Texture','Texture Brush','Element','Flame']
+    },
+    tech:['Nomad Sculpt','Procreate','Blender','Unity','UV Mapping','Shader Graph','URP','Emission']
   },
   makros:{
     cover:null,
