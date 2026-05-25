@@ -111,7 +111,8 @@
   .project-card:hover .project-read-more::after{transform:translateX(4px);}
 
   /* MODAL */
-  .modal-overlay{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,0.7);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:2rem;opacity:0;pointer-events:none;transition:opacity 0.3s;}
+  .modal-overlay{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,0.7);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:2rem;opacity:0;pointer-events:none;transition:opacity 0.3s;overscroll-behavior:contain;}
+  .modal{overscroll-behavior:contain;}
   .modal-overlay.open{opacity:1;pointer-events:auto;}
   .modal{background:var(--card-bg);border-radius:1.25rem;width:100%;max-width:860px;max-height:90vh;overflow-y:auto;position:relative;transform:translateY(20px);transition:transform 0.3s;}
   .modal-overlay.open .modal{transform:none;}
@@ -373,6 +374,20 @@
         </div>
       </div>
 
+
+      <div class="project-card fade-in" onclick="openModal('3dmodels')">
+        <div class="project-media">
+          <img src="assets/3dmodels/Screenshot_2026-05-25_134256.png" alt="3D Models" style="width:100%;height:100%;object-fit:contain;padding:0.5rem;background:var(--light);">
+        </div>
+        <div class="project-body">
+          <div class="project-tags"><span class="project-tag">Blender</span><span class="project-tag">3D Art</span><span class="project-tag" data-i18n="tag-hobby">Hobby</span></div>
+          <h3 class="project-title" data-i18n="proj8-title">3D Modelle & 3D Druck</h3>
+          <p class="project-desc" data-i18n="proj8-desc">Eigene 3D-Modelle in Blender — von Charakteren bis zu druckbaren Objekten für den eigenen 3D-Drucker.</p>
+          <div class="project-tech"><span class="tech-pill">Blender</span><span class="tech-pill">Rigging</span><span class="tech-pill">3D Printing</span></div>
+          <span class="project-read-more" data-i18n="read-more">Mehr erfahren</span>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -456,7 +471,7 @@ const i18n = {
     'proj4-title':'3D Assets — Drachen & Eier','proj4-desc':'Zwei vollständig modellierte Drachen sowie Dracheneier in Blender.',
     'proj5-title':'Makros — Kalorienzähler','proj5-desc':'Vollständige Android-App mit Barcode-Scanner und Open Food Facts Integration.',
     'proj6-title':'Otty — Habit Tracker','proj6-desc':'Habit-Tracking-App mit Otter-Maskottchen, Streak-System und Dark Mode.',
-    'proj7-title':'Gym Timer App','proj7-desc':'Trainingszähler mit SVG-Muskeldiagramm und Web Audio API Alarmen.',
+    'proj7-title':'Gym Timer App','proj7-desc':'Trainingszähler mit SVG-Muskeldiagramm und Web Audio API Alarmen.','tag-hobby':'Hobby','proj8-title':'3D Modelle & 3D Druck','proj8-desc':'Eigene 3D-Modelle in Blender — von Charakteren bis zu druckbaren Objekten für den eigenen 3D-Drucker.',
     'skills-label':'Kenntnisse','skills-title':'Skills & Tools','skills-sub':'Tools und Technologien die ich in meinen Projekten einsetze.',
     'sk1-label':'Game Development','sk2-label':'Design & Media','sk3-label':'Entwicklung','sk4-label':'Sprachen',
     'lv-good':'Gut','lv-vgood':'Sehr gut','lv-basic':'Grundkenntnisse','lv-fluent':'Fließend',
@@ -482,7 +497,7 @@ const i18n = {
     'proj4-title':'3D Assets — Dragons & Eggs','proj4-desc':'Two fully modelled dragons and dragon eggs in Blender.',
     'proj5-title':'Makros — Calorie Tracker','proj5-desc':'Full Android app with barcode scanner and Open Food Facts integration.',
     'proj6-title':'Otty — Habit Tracker','proj6-desc':'Habit tracking app with otter mascot, streak system and dark mode.',
-    'proj7-title':'Gym Timer App','proj7-desc':'Workout timer with SVG muscle diagram and Web Audio API alarms.',
+    'proj7-title':'Gym Timer App','proj7-desc':'Workout timer with SVG muscle diagram and Web Audio API alarms.','tag-hobby':'Hobby','proj8-title':'3D Models & 3D Printing','proj8-desc':'Personal 3D models in Blender — from characters to printable objects for my own 3D printer.',
     'skills-label':'Abilities','skills-title':'Skills & Tools','skills-sub':'Tools and technologies I use across my projects.',
     'sk1-label':'Game Development','sk2-label':'Design & Media','sk3-label':'Development','sk4-label':'Languages',
     'lv-good':'Good','lv-vgood':'Very good','lv-basic':'Basic','lv-fluent':'Fluent',
@@ -641,6 +656,32 @@ const projects = {
     overview:{de:'Trainingszähler-App synchronisiert mit einem persönlichen Push/Pull/Legs-Trainingsplan. Features: Web Audio API Alarme, Set-Tracking, interaktives SVG-Muskeldiagramm das trainierte Muskeln pro Übung hervorhebt. Screenshots folgen.',en:'Workout timer app synced with a personal Push/Pull/Legs training plan. Features Web Audio API alarms, set tracking and an interactive SVG muscle diagram that highlights trained muscles per exercise. Screenshots coming soon.'},
     features:{de:['⏱️ Workout-Timer','🔊 Web Audio API Alarme','💪 SVG Muskeldiagramm','📋 Set-Tracking','🏋️ PPL-Trainingsplan'],en:['⏱️ Workout timer','🔊 Web Audio API alarms','💪 SVG muscle diagram','📋 Set tracking','🏋️ PPL training plan']},
     video:null,images:[],tech:['HTML/CSS/JS','PWA','Android Studio','Web Audio API','SVG']
+  },
+  '3dmodels':{
+    cover:'assets/3dmodels/Screenshot_2026-05-25_134256.png',
+    tags:{de:['Blender','3D Art','Hobby'],en:['Blender','3D Art','Hobby']},
+    title:{de:'3D Modelle & 3D Druck',en:'3D Models & 3D Printing'},
+    subtitle:{de:'Blender · Rigging · 3D Druck · Freizeit',en:'Blender · Rigging · 3D Printing · Personal'},
+    overview:{
+      de:'Neben meinen Uni-Projekten modelliere ich in meiner Freizeit eigene 3D-Charaktere und Objekte in Blender — darunter auch Modelle die ich mit meinem eigenen 3D-Drucker ausdrucke. Von Figuren über praktische Alltagsgegenstände bis zu gerriggten Charakteren: Das 3D-Modellieren ist für mich eine kreative Erweiterung meiner Game-Design-Ausbildung.',
+      en:'Alongside my university projects I model my own 3D characters and objects in Blender in my free time — including models I print on my own 3D printer. From figurines to practical everyday objects to rigged characters: 3D modelling is for me a creative extension of my game design studies.'
+    },
+    features:{
+      de:['🧙 Charakter-Modellierung (z.B. Dark Magician)','🦴 Rigging & Bone-System in Blender','🖨️ 3D-Druck eigener Modelle','🎨 Low-Poly & High-Detail Modelle','🔧 Eigener 3D-Drucker'],
+      en:['🧙 Character modelling (e.g. Dark Magician)','🦴 Rigging & bone system in Blender','🖨️ 3D printing personal models','🎨 Low-poly & high-detail models','🔧 Personal 3D printer']
+    },
+    video:null,
+    images:[
+      'assets/3dmodels/Screenshot_2026-05-25_134256.png',
+      'assets/3dmodels/Screenshot_2026-05-25_135822.png',
+      'assets/3dmodels/Screenshot_2026-05-25_141709.png',
+      'assets/3dmodels/Screenshot_2026-05-25_141806.png'
+    ],
+    imglabels:{
+      de:['Dark Magician — Mesh','Dark Magician — Pose Mode','Dark Magician — Rig','3D Modell Detail'],
+      en:['Dark Magician — Mesh','Dark Magician — Pose Mode','Dark Magician — Rig','3D Model Detail']
+    },
+    tech:['Blender','Rigging','Armature','3D Printing','Low-Poly Modelling']
   }
 };
 
@@ -685,11 +726,15 @@ function openModal(id) {
   document.getElementById('modal-overlay').classList.add('open');
   document.getElementById('modal').scrollTop = 0;
   document.body.style.overflow = 'hidden';
+  document.body.style.position = 'fixed';
+  document.body.style.width = '100%';
 }
 
 function closeModal() {
   document.getElementById('modal-overlay').classList.remove('open');
   document.body.style.overflow = '';
+  document.body.style.position = '';
+  document.body.style.width = '';
 }
 
 function closeModalOutside(e) {
