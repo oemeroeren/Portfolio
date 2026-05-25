@@ -350,7 +350,7 @@
 
       <div class="project-card fade-in" onclick="openModal('otty')">
         <div class="project-media">
-          <div class="project-media-placeholder"><span class="icon">🦦</span><span data-i18n="img-soon">Screenshots folgen</span></div>
+          <img src="assets/otty/Screenshot_20260525_133255_Claude.jpg" alt="Otty App" style="width:100%;height:100%;object-fit:contain;padding:0.5rem;background:var(--light);">
         </div>
         <div class="project-body">
           <div class="project-tags"><span class="project-tag">Android</span><span class="project-tag">App</span></div>
@@ -640,13 +640,34 @@ const projects = {
     tech:['HTML/CSS/JS','PWA','Android Studio','Open Food Facts API','Barcode Scanner']
   },
   otty:{
-    cover:null,
+    cover:'assets/otty/Screenshot_20260525_133255_Claude.jpg',
     tags:{de:['Android','PWA','App'],en:['Android','PWA','App']},
     title:'Otty',
     subtitle:{de:'Habit Tracker · Android App · 2026',en:'Habit Tracker · Android App · 2026'},
-    overview:{de:'Habit-Tracking-App mit Otter-Maskottchen und warmer Storybook-Ästhetik. Features: Streak-System, Badges, Dark Mode, zweisprachig (DE/EN) und habittyp-spezifische Motivationsinhalte. Screenshots folgen.',en:'Habit tracking app featuring an otter mascot and warm storybook aesthetic. Includes streak system, badges, dark mode, bilingual support (DE/EN) and habit-type-specific motivational content. Screenshots coming soon.'},
-    features:{de:['🦦 Otter Maskottchen','🔥 Streak-System','🏅 Badges','🌙 Dark Mode','🌍 DE/EN zweisprachig','💬 Motivationsinhalte'],en:['🦦 Otter mascot','🔥 Streak system','🏅 Badges','🌙 Dark mode','🌍 DE/EN bilingual','💬 Motivational content']},
-    video:null,images:[],tech:['HTML/CSS/JS','PWA','Android Studio','i18n']
+    overview:{
+      de:'Otty ist eine Habit-Tracking-App mit einem Otter als Maskottchen und einer warmen Storybook-Ästhetik. Die App motiviert durch ein Streak-System, Badges und habittyp-spezifische Motivationsinhalte. Zweisprachig auf Deutsch und Englisch, mit Dark Mode und einer vollständig offline-fähigen PWA-Basis, die über Android Studio als APK verpackt wurde.',
+      en:'Otty is a habit tracking app featuring an otter mascot and a warm storybook aesthetic. The app motivates through a streak system, badges and habit-type-specific motivational content. Bilingual in German and English, with dark mode and a fully offline-capable PWA base packaged as an APK via Android Studio.'
+    },
+    features:{
+      de:['🦦 Otter Maskottchen & Storybook-Ästhetik','🔥 Streak-System','🏅 Badges & Belohnungen','🌙 Dark Mode','🌍 Zweisprachig DE/EN','💬 Habittyp-spezifische Motivation','📱 PWA → Android APK','✈️ Vollständig offline-fähig'],
+      en:['🦦 Otter mascot & storybook aesthetic','🔥 Streak system','🏅 Badges & rewards','🌙 Dark mode','🌍 Bilingual DE/EN','💬 Habit-type-specific motivation','📱 PWA → Android APK','✈️ Fully offline capable']
+    },
+    video:null,
+    images:[
+      'assets/otty/Screenshot_20260525_133255_Claude.jpg',
+      'assets/otty/Screenshot_20260525_133320_Claude.jpg',
+      'assets/otty/Screenshot_20260525_133323_Claude.jpg',
+      'assets/otty/Screenshot_20260525_133336_Claude.jpg',
+      'assets/otty/Screenshot_20260525_133346_Claude.jpg',
+      'assets/otty/Screenshot_20260525_133402_Claude.jpg',
+      'assets/otty/Screenshot_20260525_133408_Claude.jpg',
+      'assets/otty/Screenshot_20260525_140034_Claude.jpg'
+    ],
+    imglabels:{
+      de:['Startscreen','Habit-Übersicht','Streak-System','Badges','Dark Mode','Motivationsinhalt','Einstellungen','Weiteres'],
+      en:['Start screen','Habit overview','Streak system','Badges','Dark mode','Motivational content','Settings','More']
+    },
+    tech:['HTML/CSS/JS','PWA','Android Studio','i18n','Poppins/Nunito']
   },
   gymtimer:{
     cover:null,
