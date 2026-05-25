@@ -363,7 +363,7 @@
 
       <div class="project-card fade-in" onclick="openModal('gymtimer')">
         <div class="project-media">
-          <div class="project-media-placeholder"><span class="icon">💪</span><span data-i18n="img-soon">Screenshots folgen</span></div>
+          <img src="assets/gymtimer/Screenshot2026-05-25181712.png" alt="Gym Timer App" style="width:100%;height:100%;object-fit:contain;padding:0.5rem;background:var(--light);">
         </div>
         <div class="project-body">
           <div class="project-tags"><span class="project-tag">Android</span><span class="project-tag">App</span></div>
@@ -670,13 +670,29 @@ const projects = {
     tech:['HTML/CSS/JS','PWA','Android Studio','i18n','Poppins/Nunito']
   },
   gymtimer:{
-    cover:null,
+    cover:'assets/gymtimer/Screenshot2026-05-25181712.png',
     tags:{de:['Android','PWA','App'],en:['Android','PWA','App']},
     title:{de:'Gym Timer App',en:'Gym Timer App'},
     subtitle:{de:'Workout-Timer · Android App · 2026',en:'Workout Timer · Android App · 2026'},
-    overview:{de:'Trainingszähler-App synchronisiert mit einem persönlichen Push/Pull/Legs-Trainingsplan. Features: Web Audio API Alarme, Set-Tracking, interaktives SVG-Muskeldiagramm das trainierte Muskeln pro Übung hervorhebt. Screenshots folgen.',en:'Workout timer app synced with a personal Push/Pull/Legs training plan. Features Web Audio API alarms, set tracking and an interactive SVG muscle diagram that highlights trained muscles per exercise. Screenshots coming soon.'},
-    features:{de:['⏱️ Workout-Timer','🔊 Web Audio API Alarme','💪 SVG Muskeldiagramm','📋 Set-Tracking','🏋️ PPL-Trainingsplan'],en:['⏱️ Workout timer','🔊 Web Audio API alarms','💪 SVG muscle diagram','📋 Set tracking','🏋️ PPL training plan']},
-    video:null,images:[],tech:['HTML/CSS/JS','PWA','Android Studio','Web Audio API','SVG']
+    overview:{
+      de:'Die Gym Timer App ist ein persönliches Tool das auf meinen eigenen Push/Pull/Legs-Trainingsplan abgestimmt ist. Jede Übung, jede Pause, jeder Satz — alles getrackt. Ein interaktives SVG-Muskeldiagramm hebt die trainierten Muskeln pro Übung farbig hervor. Web Audio API Alarme sorgen dafür dass man auch ohne auf den Bildschirm zu schauen weiß wann die Pause vorbei ist.',
+      en:'The Gym Timer App is a personal tool tailored to my own Push/Pull/Legs training plan. Every exercise, every rest, every set — all tracked. An interactive SVG muscle diagram highlights the trained muscles per exercise in colour. Web Audio API alarms ensure you know when the rest is over without looking at the screen.'
+    },
+    features:{
+      de:['⏱️ Workout-Timer mit Pausenmanagement','🔊 Web Audio API Alarme','💪 Interaktives SVG-Muskeldiagramm','📋 Set- & Wiederholungs-Tracking','🏋️ Eigener PPL-Trainingsplan','📱 PWA → Android APK','✈️ Vollständig offline'],
+      en:['⏱️ Workout timer with rest management','🔊 Web Audio API alarms','💪 Interactive SVG muscle diagram','📋 Set & rep tracking','🏋️ Personal PPL training plan','📱 PWA → Android APK','✈️ Fully offline']
+    },
+    video:null,
+    images:[
+      'assets/gymtimer/Screenshot2026-05-25181712.png',
+      'assets/gymtimer/Screenshot2026-05-25181804.png',
+      'assets/gymtimer/Screenshot2026-05-25181822.png'
+    ],
+    imglabels:{
+      de:['Hauptscreen','Muskeldiagramm','Timer-Ansicht'],
+      en:['Main screen','Muscle diagram','Timer view']
+    },
+    tech:['HTML/CSS/JS','PWA','Android Studio','Web Audio API','SVG']
   },
   '3dmodels':{
     cover:'assets/3dmodels/Screenshot_2026-05-25_134256.png',
