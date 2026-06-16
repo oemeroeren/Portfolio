@@ -179,6 +179,17 @@
   .modal-img{cursor:zoom-in;transition:opacity 0.2s;}
   .modal-img:hover{opacity:0.85;}
 
+
+  /* SUB-MODAL GAME GRID */
+  .sub-game-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem;}
+  .sub-game-card{background:var(--off-white);border:1.5px solid var(--light);border-radius:0.75rem;overflow:hidden;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s,border-color 0.2s;}
+  .sub-game-card:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,0.1);border-color:var(--accent);}
+  .sub-game-media{aspect-ratio:16/9;background:var(--light);display:flex;align-items:center;justify-content:center;font-size:2.5rem;overflow:hidden;}
+  .sub-game-media img{width:100%;height:100%;object-fit:contain;padding:0.25rem;}
+  .sub-game-body{padding:0.75rem 1rem;}
+  .sub-game-title{font-family:var(--serif);font-size:1.05rem;color:var(--text);margin-bottom:0.3rem;}
+  .sub-game-desc{font-size:0.75rem;color:var(--muted);line-height:1.5;}
+  @media(max-width:600px){.sub-game-grid{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -762,11 +773,11 @@ const projects = {
     video:null,
     images:[
       'assets/temporal/Deckblatt.jpg',
-      'assets/temporal/Level-Skizze.png',
+      'assets/temporal/Level-Skizze.jpg',
       'assets/temporal/Level-Skizze-2.jpg',
-      'assets/temporal/Level-Skizze-2-0.jpg',
+      'assets/temporal/Level-Skizze-2-0.png',
       'assets/temporal/Moodboard.png',
-      'assets/temporal/Tutorial-Beispiel.jpg',
+      'assets/temporal/Tutorial-Beispiel.png',
       'assets/temporal/UI-Design-Skizze.png'
     ],
     imglabels:{
@@ -781,29 +792,84 @@ const projects = {
     title:{de:'Mobile Games',en:'Mobile Games'},
     subtitle:{de:'4 Eigenentwicklungen · HTML5 Canvas · Android · 2025–2026',en:'4 Independent Games · HTML5 Canvas · Android · 2025–2026'},
     overview:{
-      de:'Vier vollständige Mobile-Spiele, die ich eigenständig in HTML5/Canvas entwickelt und als Android-APKs veröffentlicht habe — jeweils mit eigenem Shop, Skins, Gacha-System und progressiver Schwierigkeitskurve. Jedes Spiel hatte ein bekanntes Referenzspiel als Vorlage, wurde aber mit eigenen Mechaniken, Systemen und einem eigenen visuellen Stil weiterentwickelt.',
-      en:'Four complete mobile games independently developed in HTML5/Canvas and published as Android APKs — each with their own shop, skins, gacha system and progressive difficulty curve. Each game took a well-known reference title as a starting point but was developed further with original mechanics, systems and a distinct visual style.'
+      de:'Vier vollständige Mobile-Spiele, eigenständig in HTML5/Canvas entwickelt und als Android-APKs veröffentlicht. Jeweils mit eigenem Shop, Skins, Gacha-System und progressiver Schwierigkeitskurve. Klicke auf ein Spiel für mehr Details.',
+      en:'Four complete mobile games independently developed in HTML5/Canvas and published as Android APKs — each with their own shop, skins, gacha system and progressive difficulty curve. Click a game for more details.'
+    },
+    features:{de:[],en:[]},
+    video:null,images:[],imglabels:{de:[],en:[]},
+    tech:['HTML5 Canvas','Web Audio API','JavaScript','Android Studio','PWA'],
+    subgames:true
+  },
+  photon:{
+    cover:null,
+    tags:{de:['Android','HTML5','Endless Runner'],en:['Android','HTML5','Endless Runner']},
+    title:'PHOTON',
+    subtitle:{de:'Synthwave Endless Runner · Android · 2025',en:'Synthwave Endless Runner · Android · 2025'},
+    overview:{
+      de:'PHOTON ist ein Synthwave Endless Runner inspiriert von Geometry Dash und Jetpack Joyride. Der Spieler navigiert durch eine neon-leuchtende Welt mit 5 verschiedenen Gefahrentypen, Zonen-basierten Farbübergängen und einem chiptune Soundtrack. Mit 13 freischaltbaren Skins, einem Gacha-Crate-System und einem Münz-Multiplikator bietet PHOTON eine umfangreiche Progression.',
+      en:'PHOTON is a synthwave endless runner inspired by Geometry Dash and Jetpack Joyride. The player navigates a neon-lit world with 5 distinct hazard types, zone-based colour transitions and a chiptune soundtrack. With 13 unlockable skins, a gacha crate system and a coin multiplier, PHOTON offers extensive progression.'
     },
     features:{
-      de:[
-        '⚡ PHOTON — Geometry Dash & Jetpack Joyride inspirierter Synthwave Endless Runner mit 5 Gefahrentypen, 13 Skins, Gacha-Crate und Zonen-Farbübergängen',
-        '🏀 BOINGO — Doodle Jump Klon mit eigenem Shop, Power-Ups, Münz-Multiplikator, Rocket-Animation und belebtem Hauptmenü-Charakter',
-        '🎨 KLECKS — Candy Crush angelehntes Match-3 mit Paint-Thema, Puzzle-Galerie und DE/EN Lokalisierung',
-        '🌙 NEON ROGUELITE — Boxhead-inspiriertes Roguelite im Neon-Stil mit Gameloop und progressiven Spielmechaniken'
-      ],
-      en:[
-        '⚡ PHOTON — Geometry Dash & Jetpack Joyride inspired synthwave endless runner with 5 hazard types, 13 skins, gacha crate and zone colour transitions',
-        '🏀 BOINGO — Doodle Jump clone with its own shop, power-ups, coin multiplier, rocket animation and animated main menu character',
-        '🎨 KLECKS — Candy Crush-inspired match-3 with paint theme, puzzle gallery and DE/EN localisation',
-        '🌙 NEON ROGUELITE — Boxhead-inspired neon-style roguelite with game loop and progressive mechanics'
-      ]
+      de:['⚡ 5 verschiedene Gefahrentypen','🎨 Zonen-basierte Farbübergänge','🎵 WebAudio Chiptune Soundtrack','👕 13 freischaltbare Skins','🎰 Gacha-Crate System','💰 Münz-Multiplikator','🌍 DE/EN Lokalisierung','📱 Android APK'],
+      en:['⚡ 5 distinct hazard types','🎨 Zone-based colour transitions','🎵 WebAudio chiptune soundtrack','👕 13 unlockable skins','🎰 Gacha crate system','💰 Coin multiplier','🌍 DE/EN localisation','📱 Android APK']
     },
-    video:null,
-    images:[],
-    imglabels:{de:[],en:[]},
-    tech:['HTML5 Canvas','Web Audio API','JavaScript','Android Studio','PWA']
+    video:null,images:[],imglabels:{de:[],en:[]},
+    tech:['HTML5 Canvas','Web Audio API','JavaScript','Android Studio']
+  },
+  boingo:{
+    cover:null,
+    tags:{de:['Android','HTML5','Platformer'],en:['Android','HTML5','Platformer']},
+    title:'BOINGO',
+    subtitle:{de:'Vertikaler Jumper · Android · 2025',en:'Vertical Jumper · Android · 2025'},
+    overview:{
+      de:'BOINGO ist ein Doodle-Jump-inspirierter vertikaler Jumper mit eigenem Shop, Power-Ups und einem animierten Charakter auf dem Hauptmenü. Ein gestapelter Münz-Multiplikator, eine Rocket-Launch-Animation und ein Multi-Slot HUD machen BOINGO zu mehr als einem simplen Klon.',
+      en:'BOINGO is a Doodle Jump-inspired vertical jumper with its own shop, power-ups and an animated character on the main menu. A stacking coin multiplier, rocket launch animation and multi-slot HUD make BOINGO more than a simple clone.'
+    },
+    features:{
+      de:['🛍️ Booster-Shop','⚡ Sammelbare Power-Ups','💰 Gestapelter Münz-Multiplikator','🚀 Rocket-Launch Animation','🎭 Animierter Hauptmenü-Charakter','📊 Multi-Slot HUD','📱 Android APK'],
+      en:['🛍️ Booster shop','⚡ Collectible power-ups','💰 Stacking coin multiplier','🚀 Rocket launch animation','🎭 Animated main menu character','📊 Multi-slot HUD','📱 Android APK']
+    },
+    video:null,images:[],imglabels:{de:[],en:[]},
+    tech:['HTML5 Canvas','JavaScript','Android Studio']
+  },
+  klecks:{
+    cover:null,
+    tags:{de:['Android','HTML5','Match-3'],en:['Android','HTML5','Match-3']},
+    title:'KLECKS',
+    subtitle:{de:'Match-3 Puzzle · Android · 2025',en:'Match-3 Puzzle · Android · 2025'},
+    overview:{
+      de:'KLECKS ist ein Candy-Crush-angelehntes Match-3-Spiel mit Paint-Thema. Mit einer Puzzle-Galerie, DE/EN Lokalisierung und einem durchgehenden Farben-und-Kleckse-Stil bietet KLECKS ein visuell einzigartiges Puzzle-Erlebnis.',
+      en:'KLECKS is a Candy Crush-inspired match-3 game with a paint theme. Featuring a puzzle gallery, DE/EN localisation and a consistent colours-and-splatters visual style, KLECKS offers a visually distinct puzzle experience.'
+    },
+    features:{
+      de:['🎨 Paint-Thema & Kleckse-Ästhetik','🧩 Puzzle-Galerie','🌍 DE/EN Lokalisierung','🎵 Musik & Soundeffekte','📱 Android APK'],
+      en:['🎨 Paint theme & splatter aesthetic','🧩 Puzzle gallery','🌍 DE/EN localisation','🎵 Music & sound effects','📱 Android APK']
+    },
+    video:null,images:[],imglabels:{de:[],en:[]},
+    tech:['HTML5 Canvas','JavaScript','Android Studio']
+  },
+  neonroguelite:{
+    cover:null,
+    tags:{de:['Android','HTML5','Roguelite'],en:['Android','HTML5','Roguelite']},
+    title:'NEON ROGUELITE',
+    subtitle:{de:'Neon Roguelite · Android · 2026',en:'Neon Roguelite · Android · 2026'},
+    overview:{
+      de:'Ein Boxhead-inspiriertes Roguelite im Neon-Stil mit vollständigem Gameloop und progressiven Spielmechaniken. Der Neon-Look verleiht dem Spiel eine eigene visuelle Identität — düster, leuchtend und atmosphärisch.',
+      en:'A Boxhead-inspired neon-style roguelite with a complete game loop and progressive mechanics. The neon aesthetic gives the game its own visual identity — dark, glowing and atmospheric.'
+    },
+    features:{
+      de:['🌙 Neon-Stil & Atmosphäre','🔄 Vollständiger Gameloop','⚔️ Progressive Spielmechaniken','💀 Roguelite-Progression','📱 Android APK'],
+      en:['🌙 Neon style & atmosphere','🔄 Complete game loop','⚔️ Progressive mechanics','💀 Roguelite progression','📱 Android APK']
+    },
+    video:null,images:[],imglabels:{de:[],en:[]},
+    tech:['HTML5 Canvas','JavaScript','Android Studio']
   }
 };
+
+function openSubGame(id) {
+  closeModal();
+  setTimeout(() => openModal(id), 150);
+}
 
 function openModal(id) {
   const p = projects[id];
@@ -811,6 +877,24 @@ function openModal(id) {
   const title = typeof p.title === 'object' ? p.title[lang] : p.title;
   const tags = p.tags[lang].map(t => `<span class="project-tag">${t}</span>`).join('');
   const features = p.features[lang].map(f => `<div class="modal-feature">${f}</div>`).join('');
+  
+  const subGames = [
+    {id:'photon', icon:'⚡', title:'PHOTON', desc:{de:'Synthwave Endless Runner',en:'Synthwave Endless Runner'}, cover:null},
+    {id:'boingo', icon:'🏀', title:'BOINGO', desc:{de:'Vertikaler Jumper',en:'Vertical Jumper'}, cover:null},
+    {id:'klecks', icon:'🎨', title:'KLECKS', desc:{de:'Match-3 Puzzle',en:'Match-3 Puzzle'}, cover:null},
+    {id:'neonroguelite', icon:'🌙', title:'NEON ROGUELITE', desc:{de:'Neon Roguelite',en:'Neon Roguelite'}, cover:null}
+  ];
+  const subgameHTML = p.subgames ? `
+    <div class="sub-game-grid">
+      ${subGames.map(g => `
+        <div class="sub-game-card" onclick="openSubGame('${g.id}')">
+          <div class="sub-game-media">${g.cover ? `<img src="${g.cover}">` : g.icon}</div>
+          <div class="sub-game-body">
+            <div class="sub-game-title">${g.title}</div>
+            <div class="sub-game-desc">${g.desc[lang]}</div>
+          </div>
+        </div>`).join('')}
+    </div>` : '';
   const tech = p.tech.map(t => `<span class="tech-pill">${t}</span>`).join('');
 
   const coverHTML = p.cover
@@ -836,8 +920,8 @@ function openModal(id) {
       <div class="modal-section-title">${lang==='de'?'Über das Projekt':'About the Project'}</div>
       <p class="modal-text">${p.overview[lang]}</p>
       ${videoHTML}
-      <div class="modal-section-title">${lang==='de'?'Features':'Features'}</div>
-      <div class="modal-features">${features}</div>
+      ${p.subgames ? '' : `<div class="modal-section-title">${lang==='de'?'Features':'Features'}</div>`}
+      ${p.subgames ? subgameHTML : `<div class="modal-features">${features}</div>`}
       ${imagesHTML}
       <div class="modal-section-title">${lang==='de'?'Tech Stack':'Tech Stack'}</div>
       <div class="modal-tech">${tech}</div>
