@@ -388,6 +388,32 @@
         </div>
       </div>
 
+
+      <div class="project-card fade-in" onclick="openModal('temporal')">
+        <div class="project-media">
+          <img src="assets/temporal/Deckblatt.jpg" alt="Temporal Tribes" style="width:100%;height:100%;object-fit:contain;padding:0.5rem;background:var(--light);">
+        </div>
+        <div class="project-body">
+          <div class="project-tags"><span class="project-tag" data-i18n="tag-uni">Uni-Projekt</span><span class="project-tag">Pitch Deck</span></div>
+          <h3 class="project-title">Temporal Tribes</h3>
+          <p class="project-desc" data-i18n="proj-temporal-desc">Pitch Deck für ein Steinzeit-Soulslike Metroidvania — entstanden durch Zufallsgenerator-Vorgaben im Studium.</p>
+          <div class="project-tech"><span class="tech-pill">Game Design</span><span class="tech-pill">Soulslike</span><span class="tech-pill">Metroidvania</span></div>
+          <span class="project-read-more" data-i18n="read-more">Mehr erfahren</span>
+        </div>
+      </div>
+      <div class="project-card fade-in" onclick="openModal('mobilegames')">
+        <div class="project-media">
+          <div class="project-media-placeholder"><span class="icon">📱</span><span data-i18n="img-soon">Screenshots folgen</span></div>
+        </div>
+        <div class="project-body">
+          <div class="project-tags"><span class="project-tag">Android</span><span class="project-tag">HTML5</span><span class="project-tag">Games</span></div>
+          <h3 class="project-title" data-i18n="proj-mobile-title">Mobile Games</h3>
+          <p class="project-desc" data-i18n="proj-mobile-desc">4 eigenständige Mobile-Spiele — von Endless Runner bis Roguelite — als Portfolio-Projekte entwickelt und auf Android veröffentlicht.</p>
+          <div class="project-tech"><span class="tech-pill">HTML5/Canvas</span><span class="tech-pill">Web Audio</span><span class="tech-pill">Android</span></div>
+          <span class="project-read-more" data-i18n="read-more">Mehr erfahren</span>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -471,7 +497,7 @@ const i18n = {
     'proj4-title':'3D Assets — Drachen & Eier','proj4-desc':'Zwei vollständig modellierte Drachen sowie Dracheneier in Blender.',
     'proj5-title':'Makros — Kalorienzähler','proj5-desc':'Vollständige Android-App mit Barcode-Scanner und Open Food Facts Integration.',
     'proj6-title':'Otty — Habit Tracker','proj6-desc':'Habit-Tracking-App mit Otter-Maskottchen, Streak-System und Dark Mode.',
-    'proj7-title':'Gym Timer App','proj7-desc':'Trainingszähler mit SVG-Muskeldiagramm und Web Audio API Alarmen.','tag-hobby':'Hobby','proj8-title':'3D Modelle & 3D Druck','proj8-desc':'Eigene 3D-Modelle in Blender — von Charakteren bis zu druckbaren Objekten für den eigenen 3D-Drucker.',
+    'proj7-title':'Gym Timer App','proj7-desc':'Trainingszähler mit SVG-Muskeldiagramm und Web Audio API Alarmen.','tag-hobby':'Hobby','proj8-title':'3D Modelle & 3D Druck','proj8-desc':'Eigene 3D-Modelle in Blender — von Charakteren bis zu druckbaren Objekten für den eigenen 3D-Drucker.','proj-temporal-desc':'Pitch Deck für ein Steinzeit-Soulslike Metroidvania — entstanden durch Zufallsgenerator-Vorgaben im Studium.','proj-mobile-title':'Mobile Games','proj-mobile-desc':'4 eigenständige Mobile-Spiele — von Endless Runner bis Roguelite — als Portfolio-Projekte entwickelt und auf Android veröffentlicht.',
     'skills-label':'Kenntnisse','skills-title':'Skills & Tools','skills-sub':'Tools und Technologien die ich in meinen Projekten einsetze.',
     'sk1-label':'Game Development','sk2-label':'Design & Media','sk3-label':'Entwicklung','sk4-label':'Sprachen',
     'lv-good':'Gut','lv-vgood':'Sehr gut','lv-basic':'Grundkenntnisse','lv-fluent':'Fließend',
@@ -497,7 +523,7 @@ const i18n = {
     'proj4-title':'3D Assets — Dragons & Eggs','proj4-desc':'Two fully modelled dragons and dragon eggs in Blender.',
     'proj5-title':'Makros — Calorie Tracker','proj5-desc':'Full Android app with barcode scanner and Open Food Facts integration.',
     'proj6-title':'Otty — Habit Tracker','proj6-desc':'Habit tracking app with otter mascot, streak system and dark mode.',
-    'proj7-title':'Gym Timer App','proj7-desc':'Workout timer with SVG muscle diagram and Web Audio API alarms.','tag-hobby':'Hobby','proj8-title':'3D Models & 3D Printing','proj8-desc':'Personal 3D models in Blender — from characters to printable objects for my own 3D printer.',
+    'proj7-title':'Gym Timer App','proj7-desc':'Workout timer with SVG muscle diagram and Web Audio API alarms.','tag-hobby':'Hobby','proj8-title':'3D Models & 3D Printing','proj8-desc':'Personal 3D models in Blender — from characters to printable objects for my own 3D printer.','proj-temporal-desc':'Pitch deck for a Stone Age soulslike Metroidvania — created from random generator prompts as a university project.','proj-mobile-title':'Mobile Games','proj-mobile-desc':'4 independent mobile games — from endless runner to roguelite — developed as portfolio projects and published on Android.',
     'skills-label':'Abilities','skills-title':'Skills & Tools','skills-sub':'Tools and technologies I use across my projects.',
     'sk1-label':'Game Development','sk2-label':'Design & Media','sk3-label':'Development','sk4-label':'Languages',
     'lv-good':'Good','lv-vgood':'Very good','lv-basic':'Basic','lv-fluent':'Fluent',
@@ -719,6 +745,63 @@ const projects = {
       en:['Dark Magician — Mesh','Dark Magician — Pose Mode','Dark Magician — Rig','3D Model Detail']
     },
     tech:['Blender','Rigging','Armature','3D Printing','Low-Poly Modelling']
+  },
+  temporal:{
+    cover:'assets/temporal/Deckblatt.jpg',
+    tags:{de:['Uni-Projekt','Pitch Deck','Game Design'],en:['Uni Project','Pitch Deck','Game Design']},
+    title:'Temporal Tribes',
+    subtitle:{de:'Steinzeit · Soulslike · Metroidvania · Pitch Deck · Uni-Projekt',en:'Stone Age · Soulslike · Metroidvania · Pitch Deck · University Project'},
+    overview:{
+      de:'Per Zufallsgenerator wurden mir im Studium drei Vorgaben gegeben: Steinzeit, Soulslike und Metroidvania. Das Ergebnis ist Temporal Tribes — ein Pitch Deck für ein Action-Soulslike in einer prähistorischen Welt mit Metroidvania-Struktur. Ich habe Levelskizzen, UI-Konzepte, ein Moodboard und ein Tutorial-Konzept entwickelt, das die Kernmechaniken und die atmosphärische Welt vorstellt.',
+      en:'Via random generator I was given three prompts for a university project: Stone Age, Soulslike and Metroidvania. The result is Temporal Tribes — a pitch deck for an action soulslike set in a prehistoric world with Metroidvania structure. I developed level sketches, UI concepts, a moodboard and a tutorial concept presenting the core mechanics and atmospheric world.'
+    },
+    features:{
+      de:['🪨 Setting: Steinzeit / prähistorische Welt','⚔️ Genre: Soulslike × Metroidvania','🗺️ Level-Skizzen & Areal-Design','🎨 Moodboard & visuelle Richtung','🖥️ UI-Design Konzept','📖 Tutorial-Konzept mit Wandmalerei-Ästhetik'],
+      en:['🪨 Setting: Stone Age / prehistoric world','⚔️ Genre: Soulslike × Metroidvania','🗺️ Level sketches & area design','🎨 Moodboard & visual direction','🖥️ UI design concept','📖 Tutorial concept with cave painting aesthetic']
+    },
+    video:null,
+    images:[
+      'assets/temporal/Deckblatt.jpg',
+      'assets/temporal/Level-Skizze.png',
+      'assets/temporal/Level-Skizze-2.jpg',
+      'assets/temporal/Level-Skizze-2-0.jpg',
+      'assets/temporal/Moodboard.png',
+      'assets/temporal/Tutorial-Beispiel.jpg',
+      'assets/temporal/UI-Design-Skizze.png'
+    ],
+    imglabels:{
+      de:['Deckblatt','Level-Skizze','Level-Skizze 2','Level-Skizze 2.0','Moodboard','Tutorial-Konzept (Wandmalerei)','UI-Design Skizze'],
+      en:['Cover','Level Sketch','Level Sketch 2','Level Sketch 2.0','Moodboard','Tutorial Concept (Cave Painting)','UI Design Sketch']
+    },
+    tech:['Game Design','Pitch Deck','Procreate','Level Design','UI Concept']
+  },
+  mobilegames:{
+    cover:null,
+    tags:{de:['Android','HTML5','Games'],en:['Android','HTML5','Games']},
+    title:{de:'Mobile Games',en:'Mobile Games'},
+    subtitle:{de:'4 Eigenentwicklungen · HTML5 Canvas · Android · 2025–2026',en:'4 Independent Games · HTML5 Canvas · Android · 2025–2026'},
+    overview:{
+      de:'Vier vollständige Mobile-Spiele, die ich eigenständig in HTML5/Canvas entwickelt und als Android-APKs veröffentlicht habe — jeweils mit eigenem Shop, Skins, Gacha-System und progressiver Schwierigkeitskurve. Jedes Spiel hatte ein bekanntes Referenzspiel als Vorlage, wurde aber mit eigenen Mechaniken, Systemen und einem eigenen visuellen Stil weiterentwickelt.',
+      en:'Four complete mobile games independently developed in HTML5/Canvas and published as Android APKs — each with their own shop, skins, gacha system and progressive difficulty curve. Each game took a well-known reference title as a starting point but was developed further with original mechanics, systems and a distinct visual style.'
+    },
+    features:{
+      de:[
+        '⚡ PHOTON — Geometry Dash & Jetpack Joyride inspirierter Synthwave Endless Runner mit 5 Gefahrentypen, 13 Skins, Gacha-Crate und Zonen-Farbübergängen',
+        '🏀 BOINGO — Doodle Jump Klon mit eigenem Shop, Power-Ups, Münz-Multiplikator, Rocket-Animation und belebtem Hauptmenü-Charakter',
+        '🎨 KLECKS — Candy Crush angelehntes Match-3 mit Paint-Thema, Puzzle-Galerie und DE/EN Lokalisierung',
+        '🌙 NEON ROGUELITE — Boxhead-inspiriertes Roguelite im Neon-Stil mit Gameloop und progressiven Spielmechaniken'
+      ],
+      en:[
+        '⚡ PHOTON — Geometry Dash & Jetpack Joyride inspired synthwave endless runner with 5 hazard types, 13 skins, gacha crate and zone colour transitions',
+        '🏀 BOINGO — Doodle Jump clone with its own shop, power-ups, coin multiplier, rocket animation and animated main menu character',
+        '🎨 KLECKS — Candy Crush-inspired match-3 with paint theme, puzzle gallery and DE/EN localisation',
+        '🌙 NEON ROGUELITE — Boxhead-inspired neon-style roguelite with game loop and progressive mechanics'
+      ]
+    },
+    video:null,
+    images:[],
+    imglabels:{de:[],en:[]},
+    tech:['HTML5 Canvas','Web Audio API','JavaScript','Android Studio','PWA']
   }
 };
 
