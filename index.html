@@ -190,6 +190,9 @@
   .sub-game-title{font-family:var(--serif);font-size:1.05rem;color:var(--text);margin-bottom:0.3rem;}
   .sub-game-desc{font-size:0.75rem;color:var(--muted);line-height:1.5;}
   @media(max-width:600px){.sub-game-grid{grid-template-columns:1fr;}}
+
+  .modal-video-local{width:100%;aspect-ratio:16/9;border-radius:0.75rem;overflow:hidden;margin:1.5rem 0;background:#000;}
+  .modal-video-local video{width:100%;height:100%;object-fit:contain;}
 </style>
 </head>
 <body>
@@ -346,46 +349,6 @@
         </div>
       </div>
 
-      <div class="project-card fade-in" onclick="openModal('makros')">
-        <div class="project-media">
-          <img src="assets/makros/Screenshot_20260525_132341_Makros.jpg" alt="Makros App" style="width:100%;height:100%;object-fit:contain;padding:0.5rem;background:var(--light);">
-        </div>
-        <div class="project-body">
-          <div class="project-tags"><span class="project-tag">Android</span><span class="project-tag">App</span></div>
-          <h3 class="project-title" data-i18n="proj5-title">Makros — Kalorienzähler</h3>
-          <p class="project-desc" data-i18n="proj5-desc">Vollständige Android-App mit Barcode-Scanner und Open Food Facts Integration.</p>
-          <div class="project-tech"><span class="tech-pill">PWA</span><span class="tech-pill">Android Studio</span><span class="tech-pill">Barcode API</span></div>
-          <span class="project-read-more" data-i18n="read-more">Mehr erfahren</span>
-        </div>
-      </div>
-
-      <div class="project-card fade-in" onclick="openModal('otty')">
-        <div class="project-media">
-          <img src="assets/otty/Screenshot_20260525_133255_Claude.jpg" alt="Otty App" style="width:100%;height:100%;object-fit:contain;padding:0.5rem;background:var(--light);">
-        </div>
-        <div class="project-body">
-          <div class="project-tags"><span class="project-tag">Android</span><span class="project-tag">App</span></div>
-          <h3 class="project-title" data-i18n="proj6-title">Otty — Habit Tracker</h3>
-          <p class="project-desc" data-i18n="proj6-desc">Habit-Tracking-App mit Otter-Maskottchen, Streak-System und Dark Mode.</p>
-          <div class="project-tech"><span class="tech-pill">PWA</span><span class="tech-pill">Android Studio</span><span class="tech-pill">DE/EN i18n</span></div>
-          <span class="project-read-more" data-i18n="read-more">Mehr erfahren</span>
-        </div>
-      </div>
-
-      <div class="project-card fade-in" onclick="openModal('gymtimer')">
-        <div class="project-media">
-          <img src="assets/gymtimer/Screenshot2026-05-25181712.png" alt="Gym Timer App" style="width:100%;height:100%;object-fit:contain;padding:0.5rem;background:var(--light);">
-        </div>
-        <div class="project-body">
-          <div class="project-tags"><span class="project-tag">Android</span><span class="project-tag">App</span></div>
-          <h3 class="project-title" data-i18n="proj7-title">Gym Timer App</h3>
-          <p class="project-desc" data-i18n="proj7-desc">Trainingszähler mit SVG-Muskeldiagramm und Web Audio API Alarmen.</p>
-          <div class="project-tech"><span class="tech-pill">PWA</span><span class="tech-pill">Web Audio API</span><span class="tech-pill">SVG</span></div>
-          <span class="project-read-more" data-i18n="read-more">Mehr erfahren</span>
-        </div>
-      </div>
-
-
       <div class="project-card fade-in" onclick="openModal('3dmodels')">
         <div class="project-media">
           <img src="assets/3dmodels/Screenshot_2026-05-25_134256.png" alt="3D Models" style="width:100%;height:100%;object-fit:contain;padding:0.5rem;background:var(--light);">
@@ -399,7 +362,6 @@
         </div>
       </div>
 
-
       <div class="project-card fade-in" onclick="openModal('temporal')">
         <div class="project-media">
           <img src="assets/temporal/Deckblatt.jpg" alt="Temporal Tribes" style="width:100%;height:100%;object-fit:contain;padding:0.5rem;background:var(--light);">
@@ -412,6 +374,20 @@
           <span class="project-read-more" data-i18n="read-more">Mehr erfahren</span>
         </div>
       </div>
+
+      <div class="project-card fade-in" onclick="openModal('apps')">
+        <div class="project-media">
+          <img src="assets/otty/Screenshot_20260525_133255_Claude.jpg" alt="Apps" style="width:100%;height:100%;object-fit:contain;padding:0.5rem;background:var(--light);">
+        </div>
+        <div class="project-body">
+          <div class="project-tags"><span class="project-tag">Android</span><span class="project-tag">PWA</span><span class="project-tag">Apps</span></div>
+          <h3 class="project-title" data-i18n="proj-apps-title">Apps</h3>
+          <p class="project-desc" data-i18n="proj-apps-desc">3 eigenständige Android-Apps — Kalorienzähler, Habit Tracker und Gym Timer.</p>
+          <div class="project-tech"><span class="tech-pill">PWA</span><span class="tech-pill">Android Studio</span><span class="tech-pill">JavaScript</span></div>
+          <span class="project-read-more" data-i18n="read-more">Mehr erfahren</span>
+        </div>
+      </div>
+
       <div class="project-card fade-in" onclick="openModal('mobilegames')">
         <div class="project-media">
           <div class="project-media-placeholder"><span class="icon">📱</span><span data-i18n="img-soon">Screenshots folgen</span></div>
@@ -419,7 +395,7 @@
         <div class="project-body">
           <div class="project-tags"><span class="project-tag">Android</span><span class="project-tag">HTML5</span><span class="project-tag">Games</span></div>
           <h3 class="project-title" data-i18n="proj-mobile-title">Mobile Games</h3>
-          <p class="project-desc" data-i18n="proj-mobile-desc">4 eigenständige Mobile-Spiele — von Endless Runner bis Roguelite — als Portfolio-Projekte entwickelt und auf Android veröffentlicht.</p>
+          <p class="project-desc" data-i18n="proj-mobile-desc">4 eigenständige Mobile-Spiele — von Endless Runner bis Roguelite.</p>
           <div class="project-tech"><span class="tech-pill">HTML5/Canvas</span><span class="tech-pill">Web Audio</span><span class="tech-pill">Android</span></div>
           <span class="project-read-more" data-i18n="read-more">Mehr erfahren</span>
         </div>
@@ -508,7 +484,7 @@ const i18n = {
     'proj4-title':'3D Assets — Drachen & Eier','proj4-desc':'Zwei vollständig modellierte Drachen sowie Dracheneier in Blender.',
     'proj5-title':'Makros — Kalorienzähler','proj5-desc':'Vollständige Android-App mit Barcode-Scanner und Open Food Facts Integration.',
     'proj6-title':'Otty — Habit Tracker','proj6-desc':'Habit-Tracking-App mit Otter-Maskottchen, Streak-System und Dark Mode.',
-    'proj7-title':'Gym Timer App','proj7-desc':'Trainingszähler mit SVG-Muskeldiagramm und Web Audio API Alarmen.','tag-hobby':'Hobby','proj8-title':'3D Modelle & 3D Druck','proj8-desc':'Eigene 3D-Modelle in Blender — von Charakteren bis zu druckbaren Objekten für den eigenen 3D-Drucker.','proj-temporal-desc':'Pitch Deck für ein Steinzeit-Soulslike Metroidvania — entstanden durch Zufallsgenerator-Vorgaben im Studium.','proj-mobile-title':'Mobile Games','proj-mobile-desc':'4 eigenständige Mobile-Spiele — von Endless Runner bis Roguelite — als Portfolio-Projekte entwickelt und auf Android veröffentlicht.',
+    'proj7-title':'Gym Timer App','proj7-desc':'Trainingszähler mit SVG-Muskeldiagramm und Web Audio API Alarmen.','tag-hobby':'Hobby','proj8-title':'3D Modelle & 3D Druck','proj8-desc':'Eigene 3D-Modelle in Blender — von Charakteren bis zu druckbaren Objekten für den eigenen 3D-Drucker.','proj-apps-title':'Apps','proj-apps-desc':'3 eigenständige Android-Apps — Kalorienzähler, Habit Tracker und Gym Timer — entwickelt als persönliche Alltagstools.','proj-temporal-desc':'Pitch Deck für ein Steinzeit-Soulslike Metroidvania — entstanden durch Zufallsgenerator-Vorgaben im Studium.','proj-mobile-title':'Mobile Games','proj-mobile-desc':'4 eigenständige Mobile-Spiele — von Endless Runner bis Roguelite — als Portfolio-Projekte entwickelt und auf Android veröffentlicht.',
     'skills-label':'Kenntnisse','skills-title':'Skills & Tools','skills-sub':'Tools und Technologien die ich in meinen Projekten einsetze.',
     'sk1-label':'Game Development','sk2-label':'Design & Media','sk3-label':'Entwicklung','sk4-label':'Sprachen',
     'lv-good':'Gut','lv-vgood':'Sehr gut','lv-basic':'Grundkenntnisse','lv-fluent':'Fließend',
@@ -534,7 +510,7 @@ const i18n = {
     'proj4-title':'3D Assets — Dragons & Eggs','proj4-desc':'Two fully modelled dragons and dragon eggs in Blender.',
     'proj5-title':'Makros — Calorie Tracker','proj5-desc':'Full Android app with barcode scanner and Open Food Facts integration.',
     'proj6-title':'Otty — Habit Tracker','proj6-desc':'Habit tracking app with otter mascot, streak system and dark mode.',
-    'proj7-title':'Gym Timer App','proj7-desc':'Workout timer with SVG muscle diagram and Web Audio API alarms.','tag-hobby':'Hobby','proj8-title':'3D Models & 3D Printing','proj8-desc':'Personal 3D models in Blender — from characters to printable objects for my own 3D printer.','proj-temporal-desc':'Pitch deck for a Stone Age soulslike Metroidvania — created from random generator prompts as a university project.','proj-mobile-title':'Mobile Games','proj-mobile-desc':'4 independent mobile games — from endless runner to roguelite — developed as portfolio projects and published on Android.',
+    'proj7-title':'Gym Timer App','proj7-desc':'Workout timer with SVG muscle diagram and Web Audio API alarms.','tag-hobby':'Hobby','proj8-title':'3D Models & 3D Printing','proj8-desc':'Personal 3D models in Blender — from characters to printable objects for my own 3D printer.','proj-apps-title':'Apps','proj-apps-desc':'3 eigenständige Android-Apps — Kalorienzähler, Habit Tracker und Gym Timer — entwickelt als persönliche Alltagstools.','proj-apps-title':'Apps','proj-apps-desc':'3 independent Android apps — calorie tracker, habit tracker and gym timer — built as personal everyday tools.','proj-temporal-desc':'Pitch deck for a Stone Age soulslike Metroidvania — created from random generator prompts as a university project.','proj-mobile-title':'Mobile Games','proj-mobile-desc':'4 independent mobile games — from endless runner to roguelite — developed as portfolio projects and published on Android.',
     'skills-label':'Abilities','skills-title':'Skills & Tools','skills-sub':'Tools and technologies I use across my projects.',
     'sk1-label':'Game Development','sk2-label':'Design & Media','sk3-label':'Development','sk4-label':'Languages',
     'lv-good':'Good','lv-vgood':'Very good','lv-basic':'Basic','lv-fluent':'Fluent',
@@ -813,7 +789,7 @@ const projects = {
       de:['⚡ 5 verschiedene Gefahrentypen','🎨 Zonen-basierte Farbübergänge','🎵 WebAudio Chiptune Soundtrack','👕 13 freischaltbare Skins','🎰 Gacha-Crate System','💰 Münz-Multiplikator','🌍 DE/EN Lokalisierung','📱 Android APK'],
       en:['⚡ 5 distinct hazard types','🎨 Zone-based colour transitions','🎵 WebAudio chiptune soundtrack','👕 13 unlockable skins','🎰 Gacha crate system','💰 Coin multiplier','🌍 DE/EN localisation','📱 Android APK']
     },
-    video:null,images:[],imglabels:{de:[],en:[]},
+    video:null,localVideo:'assets/photon/photon.mp4',images:[],imglabels:{de:[],en:[]},
     tech:['HTML5 Canvas','Web Audio API','JavaScript','Android Studio']
   },
   boingo:{
@@ -829,7 +805,7 @@ const projects = {
       de:['🛍️ Booster-Shop','⚡ Sammelbare Power-Ups','💰 Gestapelter Münz-Multiplikator','🚀 Rocket-Launch Animation','🎭 Animierter Hauptmenü-Charakter','📊 Multi-Slot HUD','📱 Android APK'],
       en:['🛍️ Booster shop','⚡ Collectible power-ups','💰 Stacking coin multiplier','🚀 Rocket launch animation','🎭 Animated main menu character','📊 Multi-slot HUD','📱 Android APK']
     },
-    video:null,images:[],imglabels:{de:[],en:[]},
+    video:null,localVideo:'assets/boingo/boingo.mp4',images:[],imglabels:{de:[],en:[]},
     tech:['HTML5 Canvas','JavaScript','Android Studio']
   },
   klecks:{
@@ -845,7 +821,7 @@ const projects = {
       de:['🎨 Paint-Thema & Kleckse-Ästhetik','🧩 Puzzle-Galerie','🌍 DE/EN Lokalisierung','🎵 Musik & Soundeffekte','📱 Android APK'],
       en:['🎨 Paint theme & splatter aesthetic','🧩 Puzzle gallery','🌍 DE/EN localisation','🎵 Music & sound effects','📱 Android APK']
     },
-    video:null,images:[],imglabels:{de:[],en:[]},
+    video:null,localVideo:'assets/klecks/klecks.mp4',images:[],imglabels:{de:[],en:[]},
     tech:['HTML5 Canvas','JavaScript','Android Studio']
   },
   neonroguelite:{
@@ -861,14 +837,47 @@ const projects = {
       de:['🌙 Neon-Stil & Atmosphäre','🔄 Vollständiger Gameloop','⚔️ Progressive Spielmechaniken','💀 Roguelite-Progression','📱 Android APK'],
       en:['🌙 Neon style & atmosphere','🔄 Complete game loop','⚔️ Progressive mechanics','💀 Roguelite progression','📱 Android APK']
     },
-    video:null,images:[],imglabels:{de:[],en:[]},
+    video:null,localVideo:'assets/neonrogue/neonrogue.mp4',images:[],imglabels:{de:[],en:[]},
     tech:['HTML5 Canvas','JavaScript','Android Studio']
+  },
+  apps:{
+    cover:'assets/otty/Screenshot_20260525_133255_Claude.jpg',
+    tags:{de:['Android','PWA','Apps'],en:['Android','PWA','Apps']},
+    title:{de:'Apps',en:'Apps'},
+    subtitle:{de:'3 Eigenentwicklungen · PWA → Android · 2026',en:'3 Independent Apps · PWA → Android · 2026'},
+    overview:{
+      de:'Drei vollständige Android-Apps die ich als persönliche Alltagstools entwickelt habe. Alle als PWA gebaut und über Android Studio als APK verpackt. Klicke auf eine App für mehr Details.',
+      en:'Three complete Android apps built as personal everyday tools. All developed as PWAs and packaged as APKs via Android Studio. Click an app for more details.'
+    },
+    features:{de:[],en:[]},
+    video:null,images:[],imglabels:{de:[],en:[]},
+    tech:['PWA','Android Studio','JavaScript','HTML/CSS'],
+    subgames:true,
+    subgameList:[
+      {id:'makros',icon:'🥗',title:'Makros',desc:{de:'Kalorienzähler & Makro-Tracker',en:'Calorie & Macro Tracker'},cover:'assets/makros/Screenshot_20260525_132341_Makros.jpg'},
+      {id:'otty',icon:'🦦',title:'Otty',desc:{de:'Habit Tracker',en:'Habit Tracker'},cover:'assets/otty/Screenshot_20260525_133255_Claude.jpg'},
+      {id:'gymtimer',icon:'💪',title:'Gym Timer',desc:{de:'Workout-Timer',en:'Workout Timer'},cover:'assets/gymtimer/Screenshot2026-05-25181712.png'}
+    ]
   }
 };
 
-function openSubGame(id) {
+let _parentModal = null;
+
+function openSubGame(id, parentId) {
+  _parentModal = parentId || null;
   closeModal();
-  setTimeout(() => openModal(id), 150);
+  setTimeout(() => {
+    openModal(id);
+    // Show back button if we came from a parent
+    if (_parentModal) {
+      const backBtn = document.createElement('button');
+      backBtn.className = 'modal-close';
+      backBtn.style.cssText = 'float:left;margin:1rem 0 0 1rem;';
+      backBtn.innerHTML = '← Zurück';
+      backBtn.onclick = () => { closeModal(); setTimeout(() => openModal(_parentModal), 150); };
+      document.getElementById('modal-content').prepend(backBtn);
+    }
+  }, 150);
 }
 
 function openModal(id) {
@@ -878,17 +887,18 @@ function openModal(id) {
   const tags = p.tags[lang].map(t => `<span class="project-tag">${t}</span>`).join('');
   const features = p.features[lang].map(f => `<div class="modal-feature">${f}</div>`).join('');
   
-  const subGames = [
-    {id:'photon', icon:'⚡', title:'PHOTON', desc:{de:'Synthwave Endless Runner',en:'Synthwave Endless Runner'}, cover:null},
-    {id:'boingo', icon:'🏀', title:'BOINGO', desc:{de:'Vertikaler Jumper',en:'Vertical Jumper'}, cover:null},
-    {id:'klecks', icon:'🎨', title:'KLECKS', desc:{de:'Match-3 Puzzle',en:'Match-3 Puzzle'}, cover:null},
-    {id:'neonroguelite', icon:'🌙', title:'NEON ROGUELITE', desc:{de:'Neon Roguelite',en:'Neon Roguelite'}, cover:null}
+  const defaultSubGames = [
+    {id:'photon', icon:'⚡', title:'PHOTON', desc:{de:'Synthwave Endless Runner',en:'Synthwave Endless Runner'}, cover:null, video:'assets/photon/photon.mp4'},
+    {id:'boingo', icon:'🏀', title:'BOINGO', desc:{de:'Vertikaler Jumper',en:'Vertical Jumper'}, cover:null, video:'assets/boingo/boingo.mp4'},
+    {id:'klecks', icon:'🎨', title:'KLECKS', desc:{de:'Match-3 Puzzle',en:'Match-3 Puzzle'}, cover:null, video:'assets/klecks/klecks.mp4'},
+    {id:'neonroguelite', icon:'🌙', title:'NEON ROGUELITE', desc:{de:'Neon Roguelite',en:'Neon Roguelite'}, cover:null, video:'assets/neonrogue/neonrogue.mp4'}
   ];
+  const subGames = p.subgameList || defaultSubGames;
   const subgameHTML = p.subgames ? `
     <div class="sub-game-grid">
       ${subGames.map(g => `
-        <div class="sub-game-card" onclick="openSubGame('${g.id}')">
-          <div class="sub-game-media">${g.cover ? `<img src="${g.cover}">` : g.icon}</div>
+        <div class="sub-game-card" onclick="openSubGame('${g.id}', '${id}')">
+          <div class="sub-game-media">${g.video ? `<video src="${g.video}" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;"></video>` : g.cover ? `<img src="${g.cover}">` : g.icon}</div>
           <div class="sub-game-body">
             <div class="sub-game-title">${g.title}</div>
             <div class="sub-game-desc">${g.desc[lang]}</div>
@@ -902,8 +912,11 @@ function openModal(id) {
     : `<div class="modal-cover-placeholder"><span style="font-size:4rem;opacity:0.3">🎮</span></div>`;
 
   const videoHTML = p.video
-    ? `<div class="modal-section-title">${lang==='de'?'Gameplay Video':'Gameplay Video'}</div>
+    ? `<div class="modal-section-title">Gameplay Video</div>
        <div class="modal-video"><iframe src="${p.video}" allowfullscreen allow="autoplay"></iframe></div>`
+    : p.localVideo
+    ? `<div class="modal-section-title">Gameplay Video</div>
+       <div class="modal-video-local"><video src="${p.localVideo}" controls autoplay muted loop playsinline></video></div>`
     : '';
 
   const imagesHTML = p.images && p.images.length > 0
