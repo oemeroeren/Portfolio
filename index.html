@@ -390,13 +390,27 @@
 
       <div class="project-card fade-in" onclick="openModal('mobilegames')">
         <div class="project-media">
-          <div class="project-media-placeholder"><span class="icon">📱</span><span data-i18n="img-soon">Screenshots folgen</span></div>
+          <video src="assets/photon/photon.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;"></video>
         </div>
         <div class="project-body">
           <div class="project-tags"><span class="project-tag">Android</span><span class="project-tag">HTML5</span><span class="project-tag">Games</span></div>
           <h3 class="project-title" data-i18n="proj-mobile-title">Mobile Games</h3>
           <p class="project-desc" data-i18n="proj-mobile-desc">4 eigenständige Mobile-Spiele — von Endless Runner bis Roguelite.</p>
           <div class="project-tech"><span class="tech-pill">HTML5/Canvas</span><span class="tech-pill">Web Audio</span><span class="tech-pill">Android</span></div>
+          <span class="project-read-more" data-i18n="read-more">Mehr erfahren</span>
+        </div>
+      </div>
+
+
+      <div class="project-card fade-in" onclick="openModal('puzzle')">
+        <div class="project-media">
+          <img src="assets/puzzle/chest_rotate.gif" alt="3D Puzzle Game" style="width:100%;height:100%;object-fit:contain;padding:0.5rem;background:#1a1a1a;">
+        </div>
+        <div class="project-body">
+          <div class="project-tags"><span class="project-tag">Unity</span><span class="project-tag">3D</span><span class="project-tag" data-i18n="tag-ongoing">Ongoing</span></div>
+          <h3 class="project-title" data-i18n="proj-puzzle-title">3D Puzzle — The Corsair's Cache</h3>
+          <p class="project-desc" data-i18n="proj-puzzle-desc">Interaktives 3D-Puzzlespiel — Objekte drehen, Rätsel lösen, die Schatzkiste öffnen. Aktuell in Entwicklung.</p>
+          <div class="project-tech"><span class="tech-pill">Unity</span><span class="tech-pill">C#</span><span class="tech-pill">Blender</span><span class="tech-pill">3D Interaction</span></div>
           <span class="project-read-more" data-i18n="read-more">Mehr erfahren</span>
         </div>
       </div>
@@ -484,7 +498,7 @@ const i18n = {
     'proj4-title':'3D Assets — Drachen & Eier','proj4-desc':'Zwei vollständig modellierte Drachen sowie Dracheneier in Blender.',
     'proj5-title':'Makros — Kalorienzähler','proj5-desc':'Vollständige Android-App mit Barcode-Scanner und Open Food Facts Integration.',
     'proj6-title':'Otty — Habit Tracker','proj6-desc':'Habit-Tracking-App mit Otter-Maskottchen, Streak-System und Dark Mode.',
-    'proj7-title':'Gym Timer App','proj7-desc':'Trainingszähler mit SVG-Muskeldiagramm und Web Audio API Alarmen.','tag-hobby':'Hobby','proj8-title':'3D Modelle & 3D Druck','proj8-desc':'Eigene 3D-Modelle in Blender — von Charakteren bis zu druckbaren Objekten für den eigenen 3D-Drucker.','proj-apps-title':'Apps','proj-apps-desc':'3 eigenständige Android-Apps — Kalorienzähler, Habit Tracker und Gym Timer — entwickelt als persönliche Alltagstools.','proj-temporal-desc':'Pitch Deck für ein Steinzeit-Soulslike Metroidvania — entstanden durch Zufallsgenerator-Vorgaben im Studium.','proj-mobile-title':'Mobile Games','proj-mobile-desc':'4 eigenständige Mobile-Spiele — von Endless Runner bis Roguelite — als Portfolio-Projekte entwickelt und auf Android veröffentlicht.',
+    'proj7-title':'Gym Timer App','proj7-desc':'Trainingszähler mit SVG-Muskeldiagramm und Web Audio API Alarmen.','tag-hobby':'Hobby','proj8-title':'3D Modelle & 3D Druck','proj8-desc':'Eigene 3D-Modelle in Blender — von Charakteren bis zu druckbaren Objekten für den eigenen 3D-Drucker.','tag-ongoing':'Ongoing','proj-puzzle-title':'3D Puzzle — The Corsair\'s Cache','proj-puzzle-desc':'Interaktives 3D-Puzzlespiel — Objekte drehen, Rätsel lösen, die Schatzkiste öffnen. Aktuell in Entwicklung.','tag-ongoing':'Ongoing','proj-puzzle-title':'3D Puzzle — The Corsair\'s Cache','proj-puzzle-desc':'Interactive 3D puzzle game — rotate objects, solve puzzles, open the treasure chest. Currently in development.','proj-apps-title':'Apps','proj-apps-desc':'3 eigenständige Android-Apps — Kalorienzähler, Habit Tracker und Gym Timer — entwickelt als persönliche Alltagstools.','proj-temporal-desc':'Pitch Deck für ein Steinzeit-Soulslike Metroidvania — entstanden durch Zufallsgenerator-Vorgaben im Studium.','proj-mobile-title':'Mobile Games','proj-mobile-desc':'4 eigenständige Mobile-Spiele — von Endless Runner bis Roguelite — als Portfolio-Projekte entwickelt und auf Android veröffentlicht.',
     'skills-label':'Kenntnisse','skills-title':'Skills & Tools','skills-sub':'Tools und Technologien die ich in meinen Projekten einsetze.',
     'sk1-label':'Game Development','sk2-label':'Design & Media','sk3-label':'Entwicklung','sk4-label':'Sprachen',
     'lv-good':'Gut','lv-vgood':'Sehr gut','lv-basic':'Grundkenntnisse','lv-fluent':'Fließend',
@@ -510,7 +524,7 @@ const i18n = {
     'proj4-title':'3D Assets — Dragons & Eggs','proj4-desc':'Two fully modelled dragons and dragon eggs in Blender.',
     'proj5-title':'Makros — Calorie Tracker','proj5-desc':'Full Android app with barcode scanner and Open Food Facts integration.',
     'proj6-title':'Otty — Habit Tracker','proj6-desc':'Habit tracking app with otter mascot, streak system and dark mode.',
-    'proj7-title':'Gym Timer App','proj7-desc':'Workout timer with SVG muscle diagram and Web Audio API alarms.','tag-hobby':'Hobby','proj8-title':'3D Models & 3D Printing','proj8-desc':'Personal 3D models in Blender — from characters to printable objects for my own 3D printer.','proj-apps-title':'Apps','proj-apps-desc':'3 eigenständige Android-Apps — Kalorienzähler, Habit Tracker und Gym Timer — entwickelt als persönliche Alltagstools.','proj-apps-title':'Apps','proj-apps-desc':'3 independent Android apps — calorie tracker, habit tracker and gym timer — built as personal everyday tools.','proj-temporal-desc':'Pitch deck for a Stone Age soulslike Metroidvania — created from random generator prompts as a university project.','proj-mobile-title':'Mobile Games','proj-mobile-desc':'4 independent mobile games — from endless runner to roguelite — developed as portfolio projects and published on Android.',
+    'proj7-title':'Gym Timer App','proj7-desc':'Workout timer with SVG muscle diagram and Web Audio API alarms.','tag-hobby':'Hobby','proj8-title':'3D Models & 3D Printing','proj8-desc':'Personal 3D models in Blender — from characters to printable objects for my own 3D printer.','tag-ongoing':'Ongoing','proj-puzzle-title':'3D Puzzle — The Corsair\'s Cache','proj-puzzle-desc':'Interaktives 3D-Puzzlespiel — Objekte drehen, Rätsel lösen, die Schatzkiste öffnen. Aktuell in Entwicklung.','proj-apps-title':'Apps','proj-apps-desc':'3 eigenständige Android-Apps — Kalorienzähler, Habit Tracker und Gym Timer — entwickelt als persönliche Alltagstools.','tag-ongoing':'Ongoing','proj-puzzle-title':'3D Puzzle — The Corsair\'s Cache','proj-puzzle-desc':'Interaktives 3D-Puzzlespiel — Objekte drehen, Rätsel lösen, die Schatzkiste öffnen. Aktuell in Entwicklung.','proj-apps-title':'Apps','proj-apps-desc':'3 independent Android apps — calorie tracker, habit tracker and gym timer — built as personal everyday tools.','proj-temporal-desc':'Pitch deck for a Stone Age soulslike Metroidvania — created from random generator prompts as a university project.','proj-mobile-title':'Mobile Games','proj-mobile-desc':'4 independent mobile games — from endless runner to roguelite — developed as portfolio projects and published on Android.',
     'skills-label':'Abilities','skills-title':'Skills & Tools','skills-sub':'Tools and technologies I use across my projects.',
     'sk1-label':'Game Development','sk2-label':'Design & Media','sk3-label':'Development','sk4-label':'Languages',
     'lv-good':'Good','lv-vgood':'Very good','lv-basic':'Basic','lv-fluent':'Fluent',
@@ -858,6 +872,32 @@ const projects = {
       {id:'otty',icon:'🦦',title:'Otty',desc:{de:'Habit Tracker',en:'Habit Tracker'},cover:'assets/otty/Screenshot_20260525_133255_Claude.jpg'},
       {id:'gymtimer',icon:'💪',title:'Gym Timer',desc:{de:'Workout-Timer',en:'Workout Timer'},cover:'assets/gymtimer/Screenshot2026-05-25181712.png'}
     ]
+  },
+  puzzle:{
+    cover:'assets/puzzle/chest_rotate.gif',
+    tags:{de:['Unity','C#','Blender','3D','Ongoing'],en:['Unity','C#','Blender','3D','Ongoing']},
+    title:"The Corsair's Cache",
+    subtitle:{de:'3D Puzzle · Unity · Aktuell in Entwicklung',en:'3D Puzzle · Unity · Currently in Development'},
+    overview:{
+      de:'The Corsair\'s Cache ist ein interaktives 3D-Puzzlespiel das aktuell in Entwicklung ist. Der Spieler dreht und wendet 3D-Objekte um versteckte Mechanismen zu entdecken und Rätsel zu lösen — bis schließlich die Schatzkiste geöffnet werden kann. Die Truhe wurde in Blender modelliert und in Unity implementiert, mit vollständiger 360°-Rotation per Drag, sanftem Zoom mit Lerp und Spacebar-Reset.',
+      en:'The Corsair\'s Cache is an interactive 3D puzzle game currently in development. The player rotates and examines 3D objects to discover hidden mechanisms and solve puzzles — ultimately unlocking the treasure chest. Modelled in Blender, implemented in Unity with full 360° drag rotation, smooth zoom with lerp and spacebar reset.'
+    },
+    features:{
+      de:['🎯 3D-Objekte per Drag drehen & wenden','🔐 Rätselkette zum Öffnen der Truhe','🏴‍☠️ Piraten-Setting','🧊 In Blender modellierte Schatzkiste','⚙️ C# Rotation & Zoom System','🔄 Spacebar Reset','🚧 Aktuell in Entwicklung'],
+      en:['🎯 Rotate & examine 3D objects via drag','🔐 Puzzle chain to unlock the chest','🏴‍☠️ Pirate setting','🧊 Treasure chest modelled in Blender','⚙️ C# rotation & zoom system','🔄 Spacebar reset','🚧 Currently in development']
+    },
+    video:null,
+    images:[
+      'assets/puzzle/chest_rotate.gif',
+      'assets/puzzle/locks.gif',
+      'assets/puzzle/locksnkeys.gif',
+      'assets/puzzle/concept_art.png'
+    ],
+    imglabels:{
+      de:['Truhe rotieren','Schloss-Rätsel','Schlösser & Schlüssel','Konzeptart'],
+      en:['Chest rotation','Lock puzzle','Locks & keys','Concept art']
+    },
+    tech:['Unity','C#','Blender','3D Interaction','Lerp','Drag Rotation']
   }
 };
 
